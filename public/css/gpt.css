@@ -1,0 +1,590 @@
+html, body {
+    overflow-x: hidden; /* Prevent horizontal scroll caused by the exiting clouds */
+}
+
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url('../asset/sea.png');
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover; /* Make background fully responsive */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Background for index page */
+.index-background {
+    background-image: url('../asset/ppap.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+
+/* Background untuk halaman game */
+.game-background {
+    background-image: url('../asset/sea.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.papan-tulis-container {
+    width: 90vw; /* 90% of viewport width for more responsiveness */
+    height: calc(90vw * 9/16); /* Maintain 16:9 ratio */
+    max-width: 1280px;
+    max-height: 720px;
+    background-image: url('../asset/piratedeck.jpg');
+    background-size: cover;
+    margin-top: 2rem;
+    border: 20px solid transparent;
+    border-image: url('../asset/woodenframe.png') 100 round;
+}
+
+/* Media query for smaller screens (like mobile devices) */
+@media (max-width: 900px) {
+    .papan-tulis-container {
+        width: 95vw; /* Adjust container width for smaller screens */
+        height: calc(95vw * 9/16); /* Maintain the 16:9 ratio */
+        border: 30px solid transparent; /* Adjust border thickness for smaller screens */
+        border-image: url('../asset/woodenframe.png') 100 round; /* Adjust the border-image for smaller screens */
+        border-image-slice: 50; /* Slice a smaller portion of the border image */
+    }
+}
+/* Add styling to bring the header to the front */
+.front-header {
+    position: absolute; /* Positioned absolutely to the papan-tulis-container */
+    top: 40px; /* Move it upwards to be 50% outside the box */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, 0); /* Align the header center to the middle of the box */
+    z-index: 100; /* High value to ensure it's in front */
+    text-align: center;
+    background-color: transparent; /* No background needed */
+    
+}
+
+/* Import the custom font Driftwood */
+@font-face {
+    font-family: 'Campfire';
+    src: url('../asset/Campfire.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Responsive clouds */
+.cloud {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    z-index: 1001;
+}
+
+#cloudL {
+    left: 0;
+    background-image: url('../asset/cloudL.png');
+    transition: left 1s ease;  /* Add transition for smooth exit */
+}
+
+#cloudR {
+    right: 0;
+    background-image: url('../asset/cloudR.png');
+    transition: right 1s ease;  /* Add transition for smooth exit */
+}
+
+/* Title and description inside the front-header */
+.title-on-board {
+    font-family: 'Campfire', sans-serif; /* Apply the custom font */
+    font-size: 3.5rem;
+    margin: 0;
+    padding: 1rem 2rem;
+    /* background-color: #f5f5f5; */
+    border-radius: 12px;
+    /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2); */
+    position: relative;
+    z-index: 101;
+    width: auto;
+}
+
+
+.description-on-board {
+    font-size: 1.1rem;
+    color: #333;
+    /* background-color: rgba(255, 255, 255, 0.9); */
+    padding: 0.2rem 1.5rem;
+    border-radius: 8px;
+    margin-top: 0rem;
+    position: relative;
+    z-index: 101;
+    width: auto;
+}
+
+.wooden-frame {
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    width: 300px; /* Adjust as needed */
+    height: 300px; /* Adjust as needed */
+    background-image: url('../asset/woodenframe.png');
+    background-size: cover; /* Make sure the image covers the div */
+    background-repeat: no-repeat;
+    z-index: 10;
+}
+
+.wooden-plank {
+    position: absolute;
+    top: 3%;
+    left: 51%; /* Start from the center of the page */
+    transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+
+    width: 500px; /* Adjust as needed */
+    height: 200px; /* Adjust as needed */
+    background-image: url('../asset/woodenplank.png');
+    background-size: cover; /* Make sure the image covers the div */
+    background-repeat: no-repeat;
+    background-size: 90% 90%; /* 50% of the container's width and height */
+    z-index: 10;
+}
+
+.wooden-plank2 {
+    position: absolute;
+    top: 13.5%;
+    left: 50%; /* Start from the center of the page */
+    transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+
+    width: 700px; /* Same width as woodenplank */
+    height: 100px; /* Same height as woodenplank */
+    background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: 10;
+}
+
+/* Game area styles */
+#game-area {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 2rem 2rem;
+    box-sizing: border-box;
+}
+
+/* Other styles remain unchanged */
+
+
+/* Character container adjustments */
+#character-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#character-container img {
+    transition: all 0.3s ease;
+}
+
+.character {
+    cursor: grab;
+    transition: transform 0.2s ease;
+}
+
+.character img {
+    height: 120px;
+    width: auto;
+    border-radius: 8px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Update statement box styles */
+#statement-box {
+    width: 70%;
+    padding: 1rem;
+    border-radius: 12px;
+    margin: 2% auto;
+}
+
+#statement {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Dialogue box styles */
+#dialogue-box {
+    width: 70%;
+    padding: 1rem;
+    border-radius: 12px;
+    margin: 2% auto;
+}
+
+#dialogue-text {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #2c3e50;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Drop zone styles */
+.drop-zone-container {
+    width: 105%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: 1%;
+    gap: 1%;
+}
+
+.drop-zone {
+    width: 15%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed transparent; /* Transparent border */
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.drop-zone img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.drop-zone.drag-over {
+    border-color: transparent; /* Ensure the border is transparent when hovered */
+    background-color: none; /* Maintain background highlight */
+}
+
+.drop-zone:hover img {
+    transform: scale(1.5);
+}
+
+/* Animation classes remain the same */
+.character.dragging {
+    opacity: 0.7;
+    transform: scale(1.05);
+}
+
+@keyframes success-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.success-drop {
+    animation: success-pulse 0.5s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .papan-tulis-container {
+        width: 95vw;
+        height: calc(95vw * 9/16);
+    }
+    
+    .title-on-board {
+        font-size: 1.8rem;
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .description-on-board {
+        font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+    }
+    
+    .drop-zone-container {
+        width: 95%;
+        gap: 0.5%;
+    }
+    
+    .character img {
+        height: 80px;
+    }
+    
+    #statement {
+        font-size: 0.9rem;
+    }
+}
+
+/* Add styles for score and life icons */
+#score-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-align: right;
+}
+
+#score {
+    font-size: 2rem;
+    color: #333;
+}
+
+#lives {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.life {
+    width: 40px;
+    height: 40px;
+}
+
+/* Update key container positioning */
+#key-container {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 60px;  /* Reduced from 100px */
+    height: 60px; /* Reduced from 100px */
+    z-index: 100;
+}
+
+/* Update floating key styles */
+#floating-key {
+    width: 100%;
+    height: auto;
+    cursor: grab;
+    transition: transform 0.3s ease;
+    transform: scale(8);  /* Changed from scale(5) */
+}
+
+#floating-key:hover {
+    transform: scale(3); /* Changed from scale(2) */
+}
+
+#floating-key:active {
+    cursor: grabbing;
+    transform: scale(1.5); /* Changed from scale(2) */
+}
+
+/* Responsive landing-container */
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 2rem;
+}
+
+.menu-button {
+    width: 100%;
+    max-width: 400px; /* Maximum size for larger screens */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+/* Styles for Play Now button */
+#play-button, #learn-button {
+    width: 100%;
+    max-width: 400px; /* Limiting button size */
+    height: auto;
+}
+
+
+.menu-button:hover {
+    transform: scale(1.05); /* Slight hover effect */
+}
+
+/* Guide overlay styles */
+.guide-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.guide-overlay.hidden {
+    display: none;
+}
+
+.guide-content {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 2rem;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+    color: white;
+    border: 2px solid gold;
+}
+
+.guide-scroll {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.close-button:hover {
+    transform: scale(1.1);
+}
+
+/* Plus animation positioning adjustment */
+.plus-animation {
+    position: absolute;
+    width: 50px; /* Adjust size as needed */
+    height: 50px;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 600px) {
+    .landing-container {
+        gap: 1rem;
+    }
+
+    .menu-button {
+        width: 80%; /* Scale buttons down for smaller screens */
+    }
+
+    .papan-tulis-container {
+        width: 95vw;
+        height: calc(95vw * 9/16);
+        border: 15px solid transparent;
+        border-image: url('../asset/woodenframe.png') 80 round;
+    }
+    
+    /* Adjust cloud size */
+    .cloud {
+        height: 50vh; /* Reduce the height for smaller screens */
+    }
+
+    /* Adjust font sizes */
+    .title-on-board {
+        font-size: 2rem; /* Smaller title */
+    }
+
+    .description-on-board {
+        font-size: 1rem;
+    }
+    
+    /* Key container */
+    #key-container {
+        width: 50px; /* Reduce key size */
+        height: 50px;
+    }
+    
+    /* Floating key adjustments */
+    #floating-key {
+        transform: scale(4); /* Smaller scale for mobile */
+    }
+    
+    /* Dialogue box adjustments */
+    #dialogue-box {
+        width: 90%;
+    }
+
+    /* Statement box */
+    #statement-box {
+        width: 90%;
+        font-size: 1rem;
+    }
+
+    /* Adjust drop zone sizes */
+    .drop-zone {
+        width: 25%; /* Larger drop zones for touch screens */
+    }
+}
+
+/* Responsive tablets */
+@media (min-width: 600px) and (max-width: 1024px) {
+    .landing-container {
+        gap: 1.5rem;
+    }
+
+    .menu-button {
+        width: 90%;
+    }
+
+    /* Adjust papan-tulis-container for tablets */
+    .papan-tulis-container {
+        width: 80vw;
+        height: calc(80vw * 9/16);
+    }
+    
+    /* Scale down fonts */
+    .title-on-board {
+        font-size: 2.5rem;
+    }
+    
+    .description-on-board {
+        font-size: 1.1rem;
+    }
+
+    /* Cloud adjustments */
+    .cloud {
+        height: 70vh;
+    }
+
+    /* Drop zone adjustments */
+    .drop-zone {
+        width: 20%;
+    }
+    
+    /* Key size */
+    #key-container {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* Larger desktop screens */
+@media (min-width: 1024px) {
+    .landing-container {
+        gap: 2rem;
+    }
+
+    .menu-button {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    /* Title and description size */
+    .title-on-board {
+        font-size: 3.5rem;
+    }
+
+    .description-on-board {
+        font-size: 1.2rem;
+    }
+    
+    /* Larger key size for desktops */
+    #key-container {
+        width: 80px;
+        height: 80px;
+    }
+}

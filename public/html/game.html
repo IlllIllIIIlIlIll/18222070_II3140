@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Virtue's Choice - Platform Interaktif Untuk Insan Berjiwa Kewarganegaraan">
+    <title>Virtue's Choice</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="game-background">
+    <div class="header-group">
+        <div class="wooden-plank"></div>
+        <div class="wooden-plank2"></div>
+        <header class="front-header">
+            <h1 class="title-on-board">Virtue's Choice</h1>
+            <p class="description-on-board">Platform Interaktif Untuk Insan Berjiwa Kewarganegaraan</p>
+        </header>
+    </div>
+    <main class="papan-tulis-container">
+        <div id="game-area">
+            <!-- Karakter dan pernyataan akan dimasukkan oleh JavaScript -->
+            <div id="character-container" aria-label="Karakter Utama"></div>
+
+            <!-- Kunci melayang -->
+            <div id="key-container" aria-label="Kunci Melayang">
+                <img src="../asset/floatingkey.png" id="floating-key" alt="Kunci Melayang" draggable="true">
+            </div>
+
+            <div class="drop-zone-container" aria-label="Area Drop Peti Harta Karun">
+                <div class="drop-zone" id="pancasila1">
+                    <img src="../asset/c1.png" alt="Sila Pertama Pancasila" draggable="false">
+                </div>
+                <div class="drop-zone" id="pancasila2">
+                    <img src="../asset/c2.png" alt="Sila Kedua Pancasila" draggable="false">
+                </div>
+                <div class="drop-zone" id="pancasila3">
+                    <img src="../asset/c3.png" alt="Sila Ketiga Pancasila" draggable="false">
+                </div>
+                <div class="drop-zone" id="pancasila4">
+                    <img src="../asset/c4.png" alt="Sila Keempat Pancasila" draggable="false">
+                </div>
+                <div class="drop-zone" id="pancasila5">
+                    <img src="../asset/c5.png" alt="Sila Kelima Pancasila" draggable="false">
+                </div>
+                <div class="drop-zone" id="not-pancasila">
+                    <img src="../asset/c6.png" alt="Bukan Nilai Pancasila" draggable="false">
+                </div>
+            </div>
+
+            <div id="score-container">
+                <p id="score">Score: 0000</p>
+                <div id="lives">
+                    <img src="../asset/life.png" class="life" alt="Nyawa">
+                    <img src="../asset/life.png" class="life" alt="Nyawa">
+                    <img src="../asset/life.png" class="life" alt="Nyawa">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add audio elements -->
+    <audio id="gameTheme" loop>
+        <source src="../asset/gametheme.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="dialogueSound">
+        <source src="../asset/dialogue.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="cashRegister">
+        <source src="../asset/cashregister.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrongSound">
+        <source src="../asset/wrong.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound">
+        <source src="../asset/click.mp3" type="audio/mpeg">
+    </audio>
+    <script src="../js/game.js"></script>
+</body>
+</html>
