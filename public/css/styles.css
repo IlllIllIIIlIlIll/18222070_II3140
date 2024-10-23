@@ -389,6 +389,14 @@ body {
     justify-content: center;
     height: 100vh;
     gap: 2rem;
+    position: relative; /* This is crucial for absolute positioning of the buttons */
+}
+
+/* Container to wrap both buttons */
+.button-container {
+    position: relative;
+    width: 100%; /* Or set a specific width if needed */
+    height: 150px; /* Adjust as needed for your layout */
 }
 
 .menu-button {
@@ -403,22 +411,22 @@ body {
 
 /* Styles for Play Now button */
 #play-button {
-    width: 148%; /* Adjust size as needed */
+    width: 27%; /* Adjust size as needed */
     height: auto;
     position: relative;
-    top: 29%; /* Position it vertically (relative to container) */
-    left: -2%; /* Adjust the horizontal position */
+    top: 24%; /* Position it vertically (relative to container) */
+    left: -0.5%; /* Adjust the horizontal position */
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
 /* Styles for Learn More button */
 #learn-button {
-    width: 137%; /* Adjust size for Learn More */
+    width: 25%; /* Adjust size for Learn More */
     height: auto;
     position: relative;
-    top: 28.5%; /* Position it vertically (relative to container) */
-    left: -3%; /* Adjust the horizontal position */
+    top: 21%; /* Position it vertically (relative to container) */
+    left: -0.6%; /* Adjust the horizontal position */
     cursor: pointer;
     transition: transform 0.3s ease;
 }
