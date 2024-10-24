@@ -227,136 +227,81 @@ function updateKeyPosition() {
     }
 }
 
-// Update showCharacter function to handle key position
 function showCharacter(character) {
     const container = document.getElementById("character-container");
     container.innerHTML = '';
-
+    
     // Create character image with updated positioning
     const characterImg = document.createElement("img");
     characterImg.src = character.activeImage;
     characterImg.alt = "Karakter";
-    characterImg.style.position = "absolute";
-    characterImg.style.right = "-5%";
-    characterImg.style.top = "-100%";
-    characterImg.style.transform = "none";
-    characterImg.style.width = "70%"; // Set width to 20% of container
-    characterImg.style.height = "auto"; // Maintain aspect ratio
+    characterImg.classList.add('character-image', 'active', 'right'); // Using consistent class approach
     characterImg.draggable = false;
-
-    // Create statement box with existing styling
+    
+    // Create statement box with consistent class structure
     const statementBox = document.createElement("div");
+    statementBox.classList.add("dialogue-container", "right");
     statementBox.id = "statement-box";
-    statementBox.style.position = "absolute";
-    statementBox.style.left = "45%";
-    statementBox.style.top = "80%";
-    statementBox.style.width = "600px";
-    statementBox.style.transform = "none";
-    statementBox.style.textAlign = "left";
-    statementBox.style.padding = "10px";
-    statementBox.style.borderRadius = "8px";
-    statementBox.style.fontFamily = "Helvetica, Arial, sans-serif";
-    statementBox.style.fontWeight = "bold";
-    statementBox.style.fontSize = "16px";
-    statementBox.style.color = "#000";
-    statementBox.style.background = "none";
     
     const statementP = document.createElement("p");
     statementP.id = "statement";
     statementP.textContent = character.statement;
     statementBox.appendChild(statementP);
-
+    
     container.appendChild(characterImg);
     container.appendChild(statementBox);
-
-    // Update key position
+    
     updateKeyPosition();
 }
 
 function showDialogue() {
-    gameState.isDragging = false;  // Ensure dragging is reset
+    gameState.isDragging = false;
     const container = document.getElementById("character-container");
     container.innerHTML = '';
-
+    
     const currentDialogue = gameState.dialogueState.currentDialogue;
     const currentMessage = currentDialogue.messages[gameState.dialogueState.currentIndex];
     
-    // Setup characters
+    const speakingChar = currentDialogue.characters.find(char => char.id === currentMessage.speaker);
+    
+    // Setup characters with consistent class structure
     currentDialogue.characters.forEach(char => {
         const charImg = document.createElement("img");
         charImg.src = char.id === currentMessage.speaker ? char.activeImage : char.waitingImage;
         charImg.alt = char.id;
-        charImg.style.position = "absolute";
+        charImg.classList.add(
+            'character-image',
+            char.position,
+            char.id === currentMessage.speaker ? 'active' : 'inactive'
+        );
         
-        if (char.id !== currentMessage.speaker) {
-            charImg.style.filter = 'brightness(0.5)';
-        }
-
-        if (char.position === 'right') {
-            charImg.style.right = "-5%";
-            charImg.style.left = "auto";
-        } else {
-            charImg.style.left = "-5%";
-            charImg.style.right = "auto";
-        }
-
-        charImg.style.top = char.id === currentMessage.speaker ? "-100%" : "0%";
-        charImg.style.transform = "none";
-        charImg.style.width = char.id === currentMessage.speaker ? "70%" : "30%";
-        charImg.style.height = "auto";
-        charImg.draggable = false;
         container.appendChild(charImg);
     });
-
-    // Create dialogue box with position based on speaker
+    
+    // Create dialogue box with consistent class structure
     const dialogueBox = document.createElement("div");
+    dialogueBox.classList.add("dialogue-box", speakingChar.position);
     dialogueBox.id = "dialogue-box";
-    dialogueBox.style.position = "absolute";
-    
-    // Position dialogue box based on speaker's position
-    const speakingChar = currentDialogue.characters.find(char => char.id === currentMessage.speaker);
-    if (speakingChar.position === 'right') {
-        dialogueBox.style.left = "45%";
-        dialogueBox.style.right = "auto";
-    } else {
-        dialogueBox.style.left = "5%";
-        dialogueBox.style.right = "auto";
-    }
-    
-    dialogueBox.style.top = "80%";
-    dialogueBox.style.width = "600px"; 
-    dialogueBox.style.transform = "none";
-    dialogueBox.style.textAlign = "left";
-    dialogueBox.style.padding = "10px";
-    dialogueBox.style.borderRadius = "8px";
-    dialogueBox.style.fontFamily = "Helvetica, Arial, sans-serif";
-    dialogueBox.style.fontWeight = "bold";
-    dialogueBox.style.fontSize = "16px";
-    dialogueBox.style.color = "#000";
-    dialogueBox.style.background = "none";
     
     const dialogueText = document.createElement("p");
     dialogueText.id = "dialogue-text";
     dialogueText.textContent = currentMessage.text;
     dialogueBox.appendChild(dialogueText);
-
+    
     container.appendChild(dialogueBox);
-
-    // Always enable dragging regardless of who's speaking
+    
+    // Enable key dragging
     const floatingKey = document.getElementById('floating-key');
     floatingKey.draggable = true;
-
-    // Update key position
+    
     updateKeyPosition();
-
-    // Add replay button only when dialogue is complete
+    
+    // Add replay button if dialogue is complete
     if (gameState.dialogueState.currentIndex === currentDialogue.messages.length - 1) {
         gameState.dialogueState.isComplete = true;
         addReplayButton();
         updateKeyVisibility();
     }
-
-    // Remove the redundant call to updateKeyVisibility here
 }
 
 // Modify setupGameClickHandler to prevent unwanted clicks
@@ -462,59 +407,49 @@ function handleCorrectDrop(dropZone) {
     if (isCooldownActive) return;  // Prevent score increase during cooldown
 
     isCooldownActive = true;  // Set cooldown active
-    
+
     const chestImg = dropZone.querySelector('img');
     chestImg.src = '../asset/opened_chest.png';
-    
+
     // Play success sound
     cashRegister.currentTime = 0;
     cashRegister.play();
-
-    // Adjustable variables for size and placement
-    const plusSizePercentage = 6; // Adjust the size of plus.png in percentage
-    const verticalOffsetPercentage = 30; // Vertical offset percentage relative to chest height
-    const horizontalOffsetPercentage = 60; // Horizontal offset percentage relative to chest width (now positive for right adjustment)
 
     // Create and show smaller drag image
     const plusImg = document.createElement('img');
     plusImg.src = '../asset/plus.png';
     plusImg.className = 'plus-animation';
-    plusImg.style.position = 'absolute';
-    plusImg.style.opacity = '0';
-    plusImg.style.transform = 'rotate(15deg)';
-    plusImg.style.transition = 'all 1.5s ease';
-
-    // Apply size
-    plusImg.style.width = `${plusSizePercentage}%`;
-    plusImg.style.height = "auto"; // Maintain aspect ratio
 
     // Position plus image relative to chest
     const chestRect = chestImg.getBoundingClientRect();
+    const verticalOffsetPercentage = 30; // Vertical offset percentage relative to chest height
+    const horizontalOffsetPercentage = 60; // Horizontal offset percentage relative to chest width
+
     plusImg.style.top = `${chestRect.top - (chestRect.height * verticalOffsetPercentage / 100)}px`;
-    plusImg.style.left = `${chestRect.left + (chestRect.width * horizontalOffsetPercentage / 100)}px`; // Use left instead of right
+    plusImg.style.left = `${chestRect.left + (chestRect.width * horizontalOffsetPercentage / 100)}px`;
 
     document.body.appendChild(plusImg);
 
-    // Animate plus image
+    // Add visible class to trigger animation
     setTimeout(() => {
-        plusImg.style.opacity = '1';
-        plusImg.style.transform = 'translateY(-50px) rotate(15deg)';
+        plusImg.classList.add('visible');
     }, 100);
-    
-    // Remove plus image
+
+    // Remove plus image after animation
     setTimeout(() => {
-        plusImg.style.opacity = '0';
-        setTimeout(() => plusImg.remove(), 500);
+        plusImg.classList.add('removing');
+        setTimeout(() => plusImg.remove(), 500); // Remove after fading out
     }, 1000);
-    
+
     updateScore(100);
-    
+
     // Reset chest image and setup next state
     setTimeout(() => {
         chestImg.src = `../asset/c${dropZone.id.slice(-1)}.png`;
         setupRandomState();
     }, 1500);
 }
+
 
 // Handle incorrect drop
 function handleIncorrectDrop() {
@@ -537,60 +472,21 @@ function addReplayButton() {
     const replayButton = document.createElement('img');
     replayButton.src = '../asset/replay.png';
     replayButton.id = 'replay-button';
-    replayButton.style.position = 'absolute';
-    replayButton.style.left = '4%';
-    replayButton.style.top = '0%';
-    // Adjust size here
-    replayButton.style.width = '130px';  // Change width
-    replayButton.style.height = 'auto'; // Change height
-    replayButton.style.transform = 'scale(8)';
-    replayButton.style.transform = 'translate(-50%, -50%)';
-    replayButton.style.cursor = 'pointer';
-    replayButton.style.animation = 'float 2s ease-in-out infinite';
-    
-    // Add hover effect
-    replayButton.addEventListener('mouseenter', () => {
-        replayButton.style.transform = 'scale(3)';
-    });
-    
-    replayButton.addEventListener('mouseleave', () => {
-        replayButton.style.transform = 'scale(8)';
-    });
     
     // Add click effect
     replayButton.addEventListener('mousedown', () => {
-        replayButton.style.transform = 'scale(1.5)';
-    });
-    
-    replayButton.addEventListener('mousedown', () => {
         clickSound.currentTime = 0;
         clickSound.play();
-        replayButton.style.transform = 'scale(1.5)'; // Shrink effect on click
     });
 
     replayButton.addEventListener('mouseup', () => {
-        replayButton.style.transform = 'scale(3)';
         restartDialogue();
         replayButton.remove();
     });
-    
-    // Add CSS animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%); }
-            50% { transform: translate(-50%, -60%); }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    replayButton.addEventListener('click', () => {
-        restartDialogue();
-        replayButton.remove();
-    });
-    
+
     document.getElementById('character-container').appendChild(replayButton);
 }
+
 
 // Restart dialogue
 function restartDialogue() {

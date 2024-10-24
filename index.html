@@ -125,7 +125,17 @@
                     learnButton.style.pointerEvents = 'auto';
                 }, 1000); // Adjust delay based on transition speed
             }, { once: true });
+
+            // Listen for the end of the transition to hide the clouds
+            cloudL.addEventListener('transitionend', () => {
+                cloudL.style.display = 'none';
+            });
+
+            cloudR.addEventListener('transitionend', () => {
+                cloudR.style.display = 'none';
+            });
         });
+
     </script>
 </body>
 </html>

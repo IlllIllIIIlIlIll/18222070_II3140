@@ -1,3 +1,7 @@
+html {
+    font-size: 16px; /* This makes 1rem equal to 10px instead of 16px */
+}
+
 /* Base styles */
 body {
     font-family: Arial, sans-serif;
@@ -43,9 +47,11 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: relative;
+    position: absolute; /* Or 'fixed' for consistent positioning during scrolling */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Center it both horizontally and vertically */
     margin-top: 3rem;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
     border-radius: 12px;
     overflow: hidden;
 
@@ -55,16 +61,6 @@ body {
     border-image-slice: 50; /* Slice 150px from the wooden frame image */
 }
 
-/* Media query for smaller screens (like mobile devices) */
-@media (max-width: 900px) {
-    .papan-tulis-container {
-        width: 95vw; /* Adjust container width for smaller screens */
-        height: calc(95vw * 9/16); /* Maintain the 16:9 ratio */
-        border: 30px solid transparent; /* Adjust border thickness for smaller screens */
-        border-image: url('../asset/woodenframe.png') 100 round; /* Adjust the border-image for smaller screens */
-        border-image-slice: 50; /* Slice a smaller portion of the border image */
-    }
-}
 /* Add styling to bring the header to the front */
 .front-header {
     position: absolute; /* Positioned absolutely to the papan-tulis-container */
@@ -108,42 +104,28 @@ body {
 }
 
 /* Title and description inside the front-header */
+/* Title on board - move it left */
 .title-on-board {
-    font-family: 'Campfire', sans-serif; /* Apply the custom font */
+    font-family: 'Campfire', sans-serif;
     font-size: 3.5rem;
     margin: 0;
-    padding: 1rem 2rem;
-    /* background-color: #f5f5f5; */
-    border-radius: 12px;
-    /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2); */
+    padding: 0.1rem 0.1rem;
     position: relative;
     z-index: 101;
     width: auto;
+    margin-left: -2rem; /* Move the title slightly to the left */
 }
 
-
+/* Description on board - move it down */
 .description-on-board {
     font-size: 1.1rem;
     color: #333;
-    /* background-color: rgba(255, 255, 255, 0.9); */
     padding: 0.2rem 1.5rem;
     border-radius: 8px;
-    margin-top: 0rem;
+    margin-top: 0.9rem; /* Move the description down */
     position: relative;
     z-index: 101;
     width: auto;
-}
-
-.wooden-frame {
-    position: absolute;
-    top: 5%;
-    left: 10%;
-    width: 300px; /* Adjust as needed */
-    height: 300px; /* Adjust as needed */
-    background-image: url('../asset/woodenframe.png');
-    background-size: cover; /* Make sure the image covers the div */
-    background-repeat: no-repeat;
-    z-index: 10;
 }
 
 .wooden-plank {
@@ -214,35 +196,28 @@ body {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-/* Update statement box styles */
-#statement-box {
-    width: 70%;
-    padding: 1rem;
-    border-radius: 12px;
-    margin: 2% auto;
-}
-
-#statement {
+#statement, #dialogue-text {
     margin: 0;
-    font-size: 1.2rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    width: 90%; /* Adjust width as needed */
+    line-height: 1.7;
     color: #2c3e50;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* Dialogue box styles */
-#dialogue-box {
-    width: 70%;
-    padding: 1rem;
+/* Combine common styles for both statement and dialogue */
+.dialogue-container {
+    position: absolute;
+    top: 80%; /* Vertical position */
+    left: 43% ; /* Adjust horizontal position as needed */
+    width: 50%; /* Adjust width as needed */
+    padding: 10px; /* Padding for both */
     border-radius: 12px;
-    margin: 2% auto;
-}
-
-#dialogue-text {
-    margin: 0;
-    font-size: 1.2rem;
-    line-height: 1.5;
+    text-align: left;
+    font-family: 'Helvetica, Arial, sans-serif';
+    font-weight: bold;
     color: #2c3e50;
+    background: none;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
@@ -300,37 +275,6 @@ body {
     animation: success-pulse 0.5s ease;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-    .papan-tulis-container {
-        width: 95vw;
-        height: calc(95vw * 9/16);
-    }
-    
-    .title-on-board {
-        font-size: 1.8rem;
-        padding: 0.8rem 1.5rem;
-    }
-    
-    .description-on-board {
-        font-size: 0.9rem;
-        padding: 0.4rem 1rem;
-    }
-    
-    .drop-zone-container {
-        width: 95%;
-        gap: 0.5%;
-    }
-    
-    .character img {
-        height: 80px;
-    }
-    
-    #statement {
-        font-size: 0.9rem;
-    }
-}
-
 /* Add styles for score and life icons */
 #score-container {
     position: absolute;
@@ -342,17 +286,23 @@ body {
 #score {
     font-size: 2rem;
     color: #333;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    line-height: 1; /* Adjust line height */
 }
 
 #lives {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 5px; /* Reduced gap between life icons */
+    margin-top: 5px; /* Add small gap between score and lives */
 }
 
 .life {
-    width: 40px;
+    width: 30px;
     height: 40px;
+    object-fit: contain;
+
 }
 
 /* Update key container positioning */
@@ -425,7 +375,7 @@ body {
     width: 25%; /* Adjust size for Learn More */
     height: auto;
     position: relative;
-    top: 21%; /* Position it vertically (relative to container) */
+    top: 20.5%; /* Position it vertically (relative to container) */
     left: -0.6%; /* Adjust the horizontal position */
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -468,6 +418,18 @@ body {
     max-height: 70vh;
     overflow-y: auto;
     padding-right: 1rem;
+    text-align: center; /* Center-align the content */
+}
+
+.guide-section ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0 auto; /* Center the list */
+    display: inline-block; /* Ensure the list is treated like an inline element for centering */
+}
+
+.guide-section ul li {
+    margin-bottom: 0.5rem; /* Add space between list items */
 }
 
 .close-button {
@@ -484,11 +446,931 @@ body {
     transform: scale(1.1);
 }
 
-/* Plus animation positioning adjustment */
+/* Plus animation styling */
 .plus-animation {
     position: absolute;
-    width: 50px; /* Adjust size as needed */
-    height: 50px;
+    width: 6%; /* This replaces the JS width logic with a percentage size */
+    height: auto; /* Maintain aspect ratio */
     pointer-events: none;
+    opacity: 0; /* Initially hidden */
+    transform: rotate(15deg); /* Initial rotation */
+    transition: all 1.5s ease; /* Smooth animation */
     z-index: 1000;
+}
+
+.plus-animation.visible {
+    opacity: 1;
+    transform: translateY(-50px) rotate(15deg); /* Final position and rotation */
+}
+
+/* For the removal animation */
+.plus-animation.removing {
+    opacity: 0;
+    transition: opacity 0.5s ease; /* Gradual fade-out */
+}
+
+/* Character image styles */
+.character-image {
+    position: absolute;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.character-image.active {
+    width: 70%;
+    top: -110%;
+}
+
+.character-image.right {
+    right: -5%;
+    left: auto;
+}
+
+.character-image.left {
+    left: -5%;
+    right: auto;
+}
+
+.character-image.inactive {
+    filter: brightness(0.5);
+    width: 30%;
+    top: 0%;
+}
+
+/* Gabungan style untuk statement box dan dialogue box */
+.dialogue-container, .dialogue-box {
+    position: absolute;
+    top: 80%;
+    width: 600px;
+    transform: none;
+    text-align: left;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+    background: none;
+}
+
+/* Posisi kanan untuk statement box dan dialogue box */
+.dialogue-container.right, .dialogue-box.right {
+    left: 45%; /* Posisi ke kanan */
+    right: auto; /* Hapus nilai right agar tidak bertabrakan */
+}
+
+/* Posisi kiri untuk dialogue box */
+.dialogue-box.left {
+    left: 0%;
+    right: auto;
+}
+
+#replay-button {
+    position: absolute;
+    left: 4%;
+    top: 0%;
+    width: 130px;  /* Change width */
+    height: auto; /* Change height */
+    cursor: pointer;
+    animation: float 2s ease-in-out infinite;
+    transition: transform 0.3s ease;
+    transform: scale(8);  /* Initial scale */
+
+    /* Add hover effect */
+}
+
+#replay-button:hover {
+    transform: scale(3);  /* Scale down on hover */
+}
+
+#replay-button:active {
+    transform: scale(1.5);  /* Shrink on click */
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%); }
+    50% { transform: translate(-50%, -60%); }
+}
+
+/* Nest Hub (1024x600) */
+@media screen and (max-width: 1024px) {
+    html {
+        font-size: 14px;
+    }
+
+    .landing-container {
+        gap: 2.3rem;
+    }
+    
+    #play-button {
+        width: 22%; /* Adjust size as needed */
+        top: 25%; /* Position it vertically (relative to container) */
+        left: -0.5%; /* Adjust the horizontal position */
+    }
+    
+    /* Styles for Learn More button */
+    #learn-button {
+        width: 20%; /* Adjust size for Learn More */
+        top: 20%; /* Position it vertically (relative to container) */
+        left: -0.55%; /* Adjust the horizontal position */
+    }
+    
+    .papan-tulis-container {
+        width: 85vw;
+        height: calc(85vw * 9/16);
+        border: 25px solid transparent;
+        margin-top: 2.5rem;
+        top:47%;
+        /* Border with wooden frame */
+        border: 30px solid transparent; /* Create space for the border */
+        border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+        border-image-slice: 50; /* Slice 150px from the wooden frame image */
+    }
+
+    .wooden-plank {
+        position: absolute;
+        top: 1%;
+        left: 51%; /* Start from the center of the page */
+        transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+    
+        width: 45vw; /* Responsive width */
+        height: auto; /* Allow height to adjust */
+        min-height: 100px; /* Ensures it doesn't collapse *
+    
+        background-image: url('../asset/woodenplank.png');
+        background-size: cover; /* Make sure the image covers the div */
+        background-repeat: no-repeat;
+        z-index: 10;
+    }
+    
+    .wooden-plank2 {
+        position: absolute;
+        top: 7%;
+        left: 50%; /* Start from the center of the page */
+        transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+    
+        width: 600px; /* Same width as woodenplank */
+        height: auto; /* Allow height to adjust */
+        min-height: 100px; /* Ensures it doesn't collapse *
+        background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        z-index: 10;
+    }
+    
+    .front-header {
+        position: absolute; /* Positioned absolutely to the papan-tulis-container */
+        top: 10px; /* Move it upwards to be 50% outside the box */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, 0); /* Align the header center to the middle of the box */
+        z-index: 100; /* High value to ensure it's in front */
+        text-align: center;
+        background-color: transparent; /* No background needed */
+    }
+    .title-on-board {
+        font-size: 2.5rem;
+        margin-left: -1.5rem;
+    }
+
+    .description-on-board {
+        font-size: 1rem;
+        margin-top: 0.7rem;
+    }
+
+    .dialogue-container, .dialogue-box {
+        position: absolute;
+        top: 79%;
+        width: 600px;
+        transform: none;
+        text-align: left;
+        padding: 10px;
+        border-radius: 8px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000;
+        background: none;
+    }
+    
+    /* Posisi kanan untuk statement box dan dialogue box */
+    .dialogue-container.right, .dialogue-box.right {
+        left: 47%; /* Posisi ke kanan */
+        right: auto; /* Hapus nilai right agar tidak bertabrakan */
+    }
+    
+    /* Posisi kiri untuk dialogue box */
+    .dialogue-box.left {
+        left: 0%;
+        right: auto;
+    }
+
+    #statement, #dialogue-text {
+        margin: 0;
+        font-size: 0.9rem;
+        width: 70%; /* Adjust width as needed */
+        line-height: 1.7;
+        color: #2c3e50;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .character-image.active {
+        width: 65%;
+        top: -100%;
+    }
+
+    .character-image.inactive {
+        width: 25%;
+    }
+    
+    .character img {
+        height: 100px;
+    }
+
+    .character-image {
+        position: absolute;
+        height: auto;
+        transition: all 0.3s ease;
+    }
+    
+    .character-image.right {
+        right: -5%;
+        left: auto;
+    }
+    
+    .character-image.left {
+        left: -5%;
+        right: auto;
+    }
+
+    #score {
+        font-size: 1.8rem;
+    }
+
+    .life {
+        width: 25px;
+        height: 35px;
+    }
+
+    #key-container {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 30px;  /* Reduced from 100px */
+        height: auto; /* Reduced from 100px */
+        z-index: 100;
+    }
+    
+    /* Update floating key styles */
+    #floating-key {
+        width: 100%;
+        height: auto;
+        cursor: grab;
+        transition: transform 0.3s ease;
+        transform: scale(8);  /* Changed from scale(5) */
+    }
+    
+    #floating-key:hover {
+        transform: scale(3); /* Changed from scale(2) */
+    }
+    
+    #floating-key:active {
+        cursor: grabbing;
+        transform: scale(1.5); /* Changed from scale(2) */
+    }
+    
+    #replay-button {
+        top: -1%;
+        width: 90px; 
+    }
+
+}
+
+/* Mobile L (425x600) */
+@media screen and (max-width: 425px) {
+    html {
+        font-size: 12px;
+    }
+    
+    body {
+        background-image: url('../asset/phoneL.png') !important;
+        background-size: 100%; /* Adjust the size to fit the screen */
+        background-position: center; /* Ensure the background is centered */
+        background-repeat: no-repeat; /* Prevent the background from repeating */
+    }
+
+    /* Remove the background image for the game page */
+    body.game-background {
+        background-image: url('../asset/sea.png') !important;
+        background-size: 360%;
+    }
+
+    .landing-container {
+        gap: 2.3rem;
+    }
+    
+    #play-button {
+        width: 67%; /* Adjust size as needed */
+        top: 33.5%; /* Position it vertically (relative to container) */
+        left: 0.1%; /* Adjust the horizontal position */
+    }
+    
+    /* Styles for Learn More button */
+    #learn-button {
+        width: 63%; /* Adjust size for Learn More */
+        top: 29.7%; /* Position it vertically (relative to container) */
+        left: -0%; /* Adjust the horizontal position */
+    }
+
+    .papan-tulis-container {
+        width: 90vw;
+        height: calc(95vw * 9/16);
+        border: 20px solid transparent;
+        margin-top: 2rem;
+        left: 50%;
+        top: 50%;
+
+        border: 15px solid transparent; /* Create space for the border */
+        border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+        border-image-slice: 50; /* Slice 150px from the wooden frame image */
+    }
+
+    .wooden-plank {
+        position: absolute;
+        top: 25%;
+        left: 50%; /* Start from the center of the page */
+        transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+    
+        width: 45vw; /* Responsive width */
+        height: auto; /* Allow height to adjust */
+        min-height: 90px; /* Ensures it doesn't collapse *
+    
+        background-image: url('../asset/woodenplank.png');
+        background-size: cover; /* Make sure the image covers the div */
+        background-repeat: no-repeat;
+        z-index: 10;
+    }
+    
+    .wooden-plank2 {
+        position: absolute;
+        top: 32%;
+        left: 48%; /* Start from the center of the page */
+        transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+    
+        width: 250px; /* Same width as woodenplank */
+        height: auto; /* Allow height to adjust */
+        min-height: 50px; /* Ensures it doesn't collapse *
+        background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        z-index: 10;
+    }
+    
+    .front-header {
+        position: absolute; /* Positioned absolutely to the papan-tulis-container */
+        top: 160px; /* Move it upwards to be 50% outside the box */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, 0); /* Align the header center to the middle of the box */
+        z-index: 100; /* High value to ensure it's in front */
+        text-align: center;
+        background-color: transparent; /* No background needed */
+    }
+    .title-on-board {
+        font-size: 1.8rem;
+        margin-left: -1.5rem;
+    }
+
+    .description-on-board {
+        font-size: 0.5rem;
+        margin-top: 1.3rem;
+        margin-left: -1rem;
+        white-space: nowrap;
+    }
+
+    .dialogue-container, .dialogue-box {
+        position: absolute;
+        top: 77%;
+        width: 250px;
+        transform: none;
+        text-align: left;
+        padding: 10px;
+        border-radius: 8px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000;
+        background: none;
+    }
+    
+    /* Posisi kanan untuk statement box dan dialogue box */
+    .dialogue-container.right, .dialogue-box.right {
+        left: 49%; /* Posisi ke kanan */
+        right: auto; /* Hapus nilai right agar tidak bertabrakan */
+    }
+    
+    /* Posisi kiri untuk dialogue box */
+    .dialogue-box.left {
+        left: -8%;
+        right: auto;
+    }
+
+    #statement, #dialogue-text {
+        margin: 0;
+        font-size: 0.4rem;
+        width: 70%; /* Adjust width as needed */
+        line-height: 1.7;
+        color: #2c3e50;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .character-image.active {
+        width: 65%;
+        top: -120%;
+    }
+
+    .character-image.inactive {
+        width: 25%;
+    }
+    
+    .character img {
+        height: 100px;
+    }
+
+    .character-image {
+        position: absolute;
+        height: auto;
+        transition: all 0.3s ease;
+    }
+    
+    .character-image.right {
+        right: -8%;
+        left: auto;
+    }
+    
+    .character-image.left {
+        left: -8%;
+        right: auto;
+    }
+
+    #score {
+        font-size: 1rem;
+    }
+
+    .life {
+        width: 15px;
+        height: 15px;
+    }
+
+    #key-container {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 30px;  /* Reduced from 100px */
+        height: auto; /* Reduced from 100px */
+        z-index: 100;
+    }
+    
+    /* Update floating key styles */
+    #floating-key {
+        width: 50%;
+        height: auto;
+        cursor: grab;
+        transition: transform 0.3s ease;
+        transform: scale(8);  /* Changed from scale(5) */
+    }
+    
+    #floating-key:hover {
+        transform: scale(3); /* Changed from scale(2) */
+    }
+    
+    #floating-key:active {
+        cursor: grabbing;
+        transform: scale(1.5); /* Changed from scale(2) */
+    }
+    
+    #replay-button {
+        top: -30%;
+        left: 0%;
+        width: 40px; 
+    }
+    
+}
+
+/* iPhone 12 Pro (375x600) */
+@media screen and (max-width: 375px) {
+    html {
+        font-size: 11px;
+    }
+
+    body {
+        background-image: url('../asset/ip12.png') !important;
+        background-size: 100%; /* Adjust the size to fit the screen */
+        background-position: center; /* Ensure the background is centered */
+        background-repeat: no-repeat; /* Prevent the background from repeating */
+    }
+
+    /* Remove the background image for the game page */
+    body.game-background {
+        background-image: url('../asset/sea.png') !important;
+        background-size: 400%;
+    }
+
+    .landing-container {
+        gap: 2.3rem;
+    }
+    
+    #play-button {
+        width: 78.5%; /* Adjust size as needed */
+        top: 24%; /* Position it vertically (relative to container) */
+        left: 1.6%; /* Adjust the horizontal position */
+    }
+    
+    /* Styles for Learn More button */
+    #learn-button {
+        width: 73%; /* Adjust size for Learn More */
+        top: 21.5%; /* Position it vertically (relative to container) */
+        left: 1%; /* Adjust the horizontal position */
+    }
+
+    .papan-tulis-container {
+        width: 90vw;
+        height: calc(95vw * 9/16);
+        border: 20px solid transparent;
+        margin-top: 2rem;
+        left: 50%;
+        top: 50%;
+
+        /* Border with wooden frame */
+        border: 13px solid transparent; /* Create space for the border */
+        border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+        border-image-slice: 50; /* Slice 150px from the wooden frame image */
+    }
+
+    .wooden-plank {
+        position: absolute;
+        top: 30%;
+        left: 50%; /* Start from the center of the page */
+        transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+    
+        width: 45vw; /* Responsive width */
+        height: auto; /* Allow height to adjust */
+        min-height: 61px; /* Ensures it doesn't collapse *
+    
+        background-image: url('../asset/woodenplank.png');
+        background-size: cover; /* Make sure the image covers the div */
+        background-repeat: no-repeat;
+        z-index: 10;
+    }
+    
+    .wooden-plank2 {
+        position: absolute;
+        top: 35%;
+        left: 48%; /* Start from the center of the page */
+        transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+    
+        width: 250px; /* Same width as woodenplank */
+        height: auto; /* Allow height to adjust */
+        min-height: 30px; /* Ensures it doesn't collapse *
+        background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        z-index: 10;
+    }
+    
+    .front-header {
+        position: absolute; /* Positioned absolutely to the papan-tulis-container */
+        top: 185px; /* Move it upwards to be 50% outside the box */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, 0); /* Align the header center to the middle of the box */
+        z-index: 100; /* High value to ensure it's in front */
+        text-align: center;
+        background-color: transparent; /* No background needed */
+    }
+    .title-on-board {
+        font-size: 1.8rem;
+        margin-left: -1.5rem;
+    }
+
+    .description-on-board {
+        font-size: 0.5rem;
+        margin-top: 0.2rem;
+        margin-left: -1rem;
+        white-space: nowrap;
+    }
+
+    .dialogue-container, .dialogue-box {
+        position: absolute;
+        top: 75%;
+        width: 225px;
+        transform: none;
+        text-align: left;
+        padding: 10px;
+        border-radius: 8px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000;
+        background: none;
+    }
+    
+    /* Posisi kanan untuk statement box dan dialogue box */
+    .dialogue-container.right, .dialogue-box.right {
+        left: 49%; /* Posisi ke kanan */
+        right: auto; /* Hapus nilai right agar tidak bertabrakan */
+    }
+    
+    /* Posisi kiri untuk dialogue box */
+    .dialogue-box.left {
+        left: -8%;
+        right: auto;
+    }
+
+    #statement, #dialogue-text {
+        margin: 0;
+        font-size: 0.4rem;
+        width: 70%; /* Adjust width as needed */
+        line-height: 1.7;
+        color: #2c3e50;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .character-image.active {
+        width: 65%;
+        top: -125%;
+    }
+
+    .character-image.inactive {
+        width: 25%;
+    }
+    
+    .character img {
+        height: 100px;
+    }
+
+    .character-image {
+        position: absolute;
+        height: auto;
+        transition: all 0.3s ease;
+    }
+    
+    .character-image.right {
+        right: -8%;
+        left: auto;
+    }
+    
+    .character-image.left {
+        left: -8%;
+        right: auto;
+    }
+
+    #score {
+        font-size: 0.7rem;
+    }
+
+    .life {
+        width: 12px;
+        height: 15px;
+    }
+
+    #key-container {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 25px;  /* Reduced from 100px */
+        height: auto; /* Reduced from 100px */
+        z-index: 100;
+    }
+    
+    /* Update floating key styles */
+    #floating-key {
+        width: 50%;
+        height: auto;
+        cursor: grab;
+        transition: transform 0.3s ease;
+        transform: scale(8);  /* Changed from scale(5) */
+    }
+    
+    #floating-key:hover {
+        transform: scale(3); /* Changed from scale(2) */
+    }
+    
+    #floating-key:active {
+        cursor: grabbing;
+        transform: scale(1.5); /* Changed from scale(2) */
+    }
+    
+    #replay-button {
+        top: -30%;
+        left: 0%;
+        width: 40px; 
+    }
+}
+
+/* iPhone 12 Pro (390x844) */
+@media screen and (max-width: 390px) {
+    html {
+        font-size: 11px;
+    }
+
+    body {
+        background-image: url('../asset/ip12.png') !important;
+        background-size: 100%; /* Adjust the size to fit the screen */
+        background-position: center; /* Ensure the background is centered */
+        background-repeat: no-repeat; /* Prevent the background from repeating */
+    }
+
+    /* Remove the background image for the game page */
+    body.game-background {
+        background-image: url('../asset/sea.png') !important;
+        background-size: 400%;
+    }
+
+    .landing-container {
+        gap: 2.3rem;
+    }
+    
+    #play-button {
+        width: 78.5%; /* Adjust size as needed */
+        top: 24%; /* Position it vertically (relative to container) */
+        left: 1.6%; /* Adjust the horizontal position */
+    }
+    
+    /* Styles for Learn More button */
+    #learn-button {
+        width: 73%; /* Adjust size for Learn More */
+        top: 21.5%; /* Position it vertically (relative to container) */
+        left: 1%; /* Adjust the horizontal position */
+    }
+
+    .papan-tulis-container {
+        width: 90vw;
+        height: calc(95vw * 9/16);
+        border: 20px solid transparent;
+        margin-top: 2rem;
+        left: 50%;
+        top: 50%;
+
+        /* Border with wooden frame */
+        border: 13px solid transparent; /* Create space for the border */
+        border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+        border-image-slice: 50; /* Slice 150px from the wooden frame image */
+    }
+
+    .wooden-plank {
+        position: absolute;
+        top: 35%;
+        left: 50%; /* Start from the center of the page */
+        transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+    
+        width: 45vw; /* Responsive width */
+        height: auto; /* Allow height to adjust */
+        min-height: 61px; /* Ensures it doesn't collapse *
+    
+        background-image: url('../asset/woodenplank.png');
+        background-size: cover; /* Make sure the image covers the div */
+        background-repeat: no-repeat;
+        z-index: 10;
+    }
+    
+    .wooden-plank2 {
+        position: absolute;
+        top: 39%;
+        left: 48%; /* Start from the center of the page */
+        transform: translateX(-50%); /* Shift it back by 50% of its own width to center it */
+    
+        width: 250px; /* Same width as woodenplank */
+        height: auto; /* Allow height to adjust */
+        min-height: 30px; /* Ensures it doesn't collapse *
+        background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        z-index: 10;
+    }
+    
+    .front-header {
+        position: absolute; /* Positioned absolutely to the papan-tulis-container */
+        top: 300px; /* Move it upwards to be 50% outside the box */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, 0); /* Align the header center to the middle of the box */
+        z-index: 100; /* High value to ensure it's in front */
+        text-align: center;
+        background-color: transparent; /* No background needed */
+    }
+    .title-on-board {
+        font-size: 1.8rem;
+        margin-left: -1.5rem;
+    }
+
+    .description-on-board {
+        font-size: 0.5rem;
+        margin-top: 0.5rem;
+        margin-left: -1rem;
+        white-space: nowrap;
+    }
+
+    .dialogue-container, .dialogue-box {
+        position: absolute;
+        top: 70%;
+        width: 225px;
+        transform: none;
+        text-align: left;
+        padding: 10px;
+        border-radius: 8px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        color: #000;
+        background: none;
+    }
+    
+    /* Posisi kanan untuk statement box dan dialogue box */
+    .dialogue-container.right, .dialogue-box.right {
+        left: 49%; /* Posisi ke kanan */
+        right: auto; /* Hapus nilai right agar tidak bertabrakan */
+    }
+    
+    /* Posisi kiri untuk dialogue box */
+    .dialogue-box.left {
+        left: -8%;
+        right: auto;
+    }
+
+    #statement, #dialogue-text {
+        margin: 0;
+        font-size: 0.4rem;
+        width: 70%; /* Adjust width as needed */
+        line-height: 1.7;
+        color: #2c3e50;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .character-image.active {
+        width: 65%;
+        top: -125%;
+    }
+
+    .character-image.inactive {
+        width: 25%;
+    }
+    
+    .character img {
+        height: 100px;
+    }
+
+    .character-image {
+        position: absolute;
+        height: auto;
+        transition: all 0.3s ease;
+    }
+    
+    .character-image.right {
+        right: -8%;
+        left: auto;
+    }
+    
+    .character-image.left {
+        left: -8%;
+        right: auto;
+    }
+
+    #score {
+        font-size: 0.7rem;
+    }
+
+    .life {
+        width: 12px;
+        height: 15px;
+    }
+
+    #key-container {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 25px;  /* Reduced from 100px */
+        height: auto; /* Reduced from 100px */
+        z-index: 100;
+    }
+    
+    /* Update floating key styles */
+    #floating-key {
+        width: 50%;
+        height: auto;
+        cursor: grab;
+        transition: transform 0.3s ease;
+        transform: scale(8);  /* Changed from scale(5) */
+    }
+    
+    #floating-key:hover {
+        transform: scale(3); /* Changed from scale(2) */
+    }
+    
+    #floating-key:active {
+        cursor: grabbing;
+        transform: scale(1.5); /* Changed from scale(2) */
+    }
+    
+    #replay-button {
+        top: -30%;
+        left: 0%;
+        width: 40px; 
+    }
 }
