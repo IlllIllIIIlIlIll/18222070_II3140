@@ -11,21 +11,14 @@
 ## Cara Bermain
 
 1. **Kontrol Dasar**:
-   - Gunakan **SPACE** atau **klik** untuk melanjutkan dialog.
-   - Seret **kunci melayang** ke peti harta karun yang sesuai dengan nilai Pancasila.
+   - Gunakan **SPACE** atau **klik** pada desktop dan **TAP** pada mobile untuk melanjutkan dialog.
+   - Seret **kunci melayang** atau tekan **numeric keypad** ke peti harta karun yang sesuai dengan nilai Pancasila.
    - Cocokkan pernyataan atau dialog karakter dengan sila yang benar dari Pancasila.
 
 2. **Sistem Penilaian**:
    - **Benar**: +100 poin.
    - **Salah**: Kehilangan 1 nyawa.
    - Permainan berakhir ketika semua nyawa habis.
-
-## Karakter
-
-Setiap karakter dalam permainan memiliki dialog unik yang mencerminkan nilai-nilai Pancasila. Pemain harus mencocokkan pernyataan atau aksi karakter dengan sila yang sesuai dari Pancasila.
-
-- **Budiono**: Menghargai perbedaan agama dan memberikan waktu untuk ibadah. (Sila Pertama)
-- **Siregar**: Membantu sesama dalam kesulitan. (Sila Kedua)
 
 ## Teknologi yang Digunakan
 
@@ -57,7 +50,7 @@ Game **Virtue's Choice** telah dioptimalkan untuk berbagai ukuran layar dan pera
 - **414px x 896px (iPhone 11 Pro Max)**
 - **425px x 824px** (Mobile L)
 
-Permainan ini telah diuji pada berbagai perangkat dengan resolusi yang berbeda untuk memastikan pengalaman pengguna yang mulus, baik di perangkat desktop, tablet, maupun ponsel.
+Permainan ini telah diuji pada berbagai perangkat dengan resolusi yang berbeda untuk memastikan pengalaman pengguna yang mulus, baik di perangkat desktop maupun ponsel.
 
 ## Author
 
