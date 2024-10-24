@@ -1,4 +1,3 @@
-// Game state and configuration
 let characters = [
     {
         id: 'budiono',
@@ -85,31 +84,29 @@ let gameState = {
     isDragging: false
 };
 
-
+let isMobileDevice = false;
 let currentCharacterIndex = 0;
 let score = 0;
 let lives = 3;
 let isDragging = false;
-let isCooldownActive = false; // Add cooldown flag
-
-// Initialize game audio
+let isCooldownActive = false;
 let gameTheme, dialogueSound, cashRegister, wrongSound, clickSound;
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize audio elements
+    isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    initializeAudio();
+    initializeGame();
+});
+
+function initializeAudio() {
     gameTheme = document.getElementById('gameTheme');
     dialogueSound = document.getElementById('dialogueSound');
     cashRegister = document.getElementById('cashRegister');
     wrongSound = document.getElementById('wrongSound');
     clickSound = document.getElementById('clickSound');
-    
-    // Start game music
     gameTheme.play();
-    
-    initializeGame();
-});
+}
 
-// Initialize game with random state
 function initializeGame() {
     setupRandomState();
     updateScore(0);
@@ -120,14 +117,11 @@ function initializeGame() {
     updateKeyVisibility();
 }
 
-// Update the setupRandomState function to include key position update
-// Ensure the key is hidden at the start of a new dialogue or character
 function setupRandomState() {
+    isCooldownActive = false;
     gameState.currentType = Math.random() < 0.5 ? 'character' : 'dialogue';
-
-    // Reset dialogue state when starting new dialogue
     gameState.dialogueState.isComplete = false;
-    updateKeyVisibility(); // Ensure key is hidden initially
+    updateKeyVisibility();
 
     if (gameState.currentType === 'dialogue') {
         gameState.dialogueState.currentDialogue = dialogues[Math.floor(Math.random() * dialogues.length)];
@@ -137,50 +131,21 @@ function setupRandomState() {
         gameState.characterState.currentCharacter = characters[Math.floor(Math.random() * characters.length)];
         showCharacter(gameState.characterState.currentCharacter);
     }
-
-    // Update key position after setting up the new state
     updateKeyPosition();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const cloudL = document.getElementById('cloudL');
-    const cloudR = document.getElementById('cloudR');
-    const playButton = document.getElementById('play-button');
-    const learnButton = document.getElementById('learn-button');
-    
-    // Block pointer events initially
-    playButton.style.pointerEvents = 'none';
-    learnButton.style.pointerEvents = 'none';
-    
-    document.body.addEventListener('click', function() {
-        const chestOpen = document.getElementById('chestOpen');
-        const pirateTheme = document.getElementById('pirateTheme');
-        
-        // Play sounds simultaneously
-        chestOpen.currentTime = 0;
-        chestOpen.play();
-        pirateTheme.currentTime = 0;
-        pirateTheme.play();
-        
-        // Remove clouds with a curtain effect
-        cloudL.style.transition = 'left 1s ease';
-        cloudR.style.transition = 'right 1s ease';
-        cloudL.style.left = '-100%';
-        cloudR.style.right = '-100%';
-        
-        // Enable buttons after clouds disappear
-        setTimeout(() => {
-            playButton.style.pointerEvents = 'auto';
-            learnButton.style.pointerEvents = 'auto';
-        }, 1000); // Adjust delay based on transition speed
-    }, { once: true });
-});
-
-// Update the drag and drop handlers
 function setupDragAndDrop() {
     const floatingKey = document.getElementById('floating-key');
     const dropZones = document.querySelectorAll('.drop-zone');
     
+    if (!isMobileDevice) {
+        setupDesktopDragAndDrop(floatingKey, dropZones);
+    } else {
+        setupMobileDragAndDrop(floatingKey, dropZones);
+    }
+}
+
+function setupDesktopDragAndDrop(floatingKey, dropZones) {
     floatingKey.addEventListener('mousedown', () => {
         clickSound.currentTime = 0;
         clickSound.play();
@@ -190,40 +155,132 @@ function setupDragAndDrop() {
     floatingKey.addEventListener('dragend', handleDragEnd);
     
     dropZones.forEach(zone => {
-        zone.addEventListener('dragenter', (e) => {
-            e.preventDefault();
-            if (gameState.dialogueState.isComplete || gameState.currentType === 'character') {
-                zone.classList.add('drag-over');
-            }
-        });
-        
-        zone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            if (gameState.dialogueState.isComplete || gameState.currentType === 'character') {
-                zone.classList.add('drag-over');
-            }
-        });
-        
-        zone.addEventListener('dragleave', () => {
-            zone.classList.remove('drag-over');
-        });
-        
+        zone.addEventListener('dragenter', handleDragEnter);
+        zone.addEventListener('dragover', handleDragOver);
+        zone.addEventListener('dragleave', handleDragLeave);
         zone.addEventListener('drop', handleDrop);
     });
 }
 
-// Update the key position based on game state
-function updateKeyPosition() {
-    const keyContainer = document.getElementById('key-container');
+function setupMobileDragAndDrop(floatingKey, dropZones) {
+    floatingKey.style.display = 'none';
+    dropZones.forEach(zone => {
+        zone.addEventListener('touchstart', handleMobileChestTap);
+        zone.addEventListener('click', handleMobileChestTap);
+    });
+}
+
+function handleDragStart(e) {
+    gameState.isDragging = true;
+    e.target.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', 'key');
+    setupDragImage(e);
+}
+
+function setupDragImage(e) {
+    const dragImage = new Image();
+    dragImage.src = '../../public/asset/key.png';
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.height = 32;
+    dragImage.onload = () => ctx.drawImage(dragImage, 0, 0, 32, 32);
+    e.dataTransfer.setDragImage(canvas, 16, 16);
+}
+
+function handleDragEnd(e) {
+    gameState.isDragging = false;
+    e.target.classList.remove('dragging');
+}
+
+function handleDragEnter(e) {
+    e.preventDefault();
+    if (gameState.dialogueState.isComplete || gameState.currentType === 'character') {
+        this.classList.add('drag-over');
+    }
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    if (gameState.dialogueState.isComplete || gameState.currentType === 'character') {
+        this.classList.add('drag-over');
+    }
+}
+
+function handleDragLeave() {
+    this.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    this.classList.remove('drag-over');
     
-    if (gameState.currentType === 'dialogue') {
-        // For dialogue state, position the key near the dialogue box
-        keyContainer.style.top = "25%";
-        keyContainer.style.left = "50%";
-    } else {
-        // For character state, position the key near the statement
-        keyContainer.style.top = "25%";
-        keyContainer.style.left = "50%";
+    if ((gameState.dialogueState.isComplete || gameState.currentType === 'character') && !isCooldownActive) {
+        const correctZone = getCorrectZone();
+        this.id === correctZone ? handleCorrectDrop(this) : handleIncorrectDrop();
+    }
+}
+
+function getCorrectZone() {
+    return gameState.currentType === 'dialogue' 
+        ? gameState.dialogueState.currentDialogue.correctZone
+        : gameState.characterState.currentCharacter.correctZone;
+}
+
+function handleMobileChestTap(e) {
+    e.preventDefault();
+    if ((gameState.dialogueState.isComplete || gameState.currentType === 'character') && !isCooldownActive) {
+        const correctZone = getCorrectZone();
+        this.id === correctZone ? handleCorrectDrop(this) : handleIncorrectDrop();
+    }
+}
+
+function handleCorrectDrop(dropZone) {
+    if (isCooldownActive) return;
+    isCooldownActive = true;
+
+    const chestImg = dropZone.querySelector('img');
+    chestImg.src = '../../public/asset/opened_chest.png';
+    cashRegister.currentTime = 0;
+    cashRegister.play();
+
+    createPlusAnimation(chestImg);
+    updateScore(100);
+
+    setTimeout(() => {
+        chestImg.src = `../../public/asset/c${dropZone.id.slice(-1)}.png`;
+        setupRandomState();
+        isCooldownActive = false;
+    }, 1500);
+}
+
+function createPlusAnimation(chestImg) {
+    const plusImg = document.createElement('img');
+    plusImg.src = '../../public/asset/plus.png';
+    plusImg.className = 'plus-animation';
+
+    const chestRect = chestImg.getBoundingClientRect();
+    plusImg.style.top = `${chestRect.top - (chestRect.height * 30 / 100)}px`;
+    plusImg.style.left = `${chestRect.left + (chestRect.width * 60 / 100)}px`;
+
+    document.body.appendChild(plusImg);
+    setTimeout(() => plusImg.classList.add('visible'), 100);
+    setTimeout(() => {
+        plusImg.classList.add('removing');
+        setTimeout(() => plusImg.remove(), 500);
+    }, 1000);
+}
+
+function handleIncorrectDrop() {
+    wrongSound.currentTime = 0;
+    wrongSound.play();
+
+    if (lives > 0) {
+        lives--;
+        updateLives();
+    }
+    
+    if (lives === 0) {
+        gameOver();
     }
 }
 
@@ -231,14 +288,12 @@ function showCharacter(character) {
     const container = document.getElementById("character-container");
     container.innerHTML = '';
     
-    // Create character image with updated positioning
     const characterImg = document.createElement("img");
     characterImg.src = character.activeImage;
     characterImg.alt = "Karakter";
-    characterImg.classList.add('character-image', 'active', 'right'); // Using consistent class approach
+    characterImg.classList.add('character-image', 'active', 'right');
     characterImg.draggable = false;
     
-    // Create statement box with consistent class structure
     const statementBox = document.createElement("div");
     statementBox.classList.add("dialogue-container", "right");
     statementBox.id = "statement-box";
@@ -262,265 +317,112 @@ function showDialogue() {
     const currentDialogue = gameState.dialogueState.currentDialogue;
     const currentMessage = currentDialogue.messages[gameState.dialogueState.currentIndex];
     
-    const speakingChar = currentDialogue.characters.find(char => char.id === currentMessage.speaker);
+    setupCharacters(container, currentDialogue, currentMessage);
+    createDialogueBox(container, currentMessage, currentDialogue);
     
-    // Setup characters with consistent class structure
-    currentDialogue.characters.forEach(char => {
+    if (gameState.dialogueState.currentIndex === currentDialogue.messages.length - 1) {
+        gameState.dialogueState.isComplete = true;
+        addReplayButton();
+    }
+    
+    updateKeyVisibility();
+}
+
+function setupCharacters(container, dialogue, currentMessage) {
+    dialogue.characters.forEach(char => {
         const charImg = document.createElement("img");
-        charImg.src = char.id === currentMessage.speaker ? char.activeImage : char.waitingImage;
+        charImg.src = char.waitingImage;
         charImg.alt = char.id;
-        charImg.classList.add(
-            'character-image',
-            char.position,
-            char.id === currentMessage.speaker ? 'active' : 'inactive'
-        );
-        
+        charImg.classList.add('character-image', char.position, 'inactive');
         container.appendChild(charImg);
     });
-    
-    // Create dialogue box with consistent class structure
+
+    const speakingChar = dialogue.characters.find(char => char.id === currentMessage.speaker);
+    const speakingCharImg = container.querySelector(`img[alt="${currentMessage.speaker}"]`);
+    if (speakingCharImg) {
+        speakingCharImg.src = speakingChar.activeImage;
+        speakingCharImg.classList.remove('inactive');
+        speakingCharImg.classList.add('active');
+    }
+}
+
+function createDialogueBox(container, message, dialogue) {
+    const speakingChar = dialogue.characters.find(char => char.id === message.speaker);
     const dialogueBox = document.createElement("div");
     dialogueBox.classList.add("dialogue-box", speakingChar.position);
     dialogueBox.id = "dialogue-box";
     
     const dialogueText = document.createElement("p");
     dialogueText.id = "dialogue-text";
-    dialogueText.textContent = currentMessage.text;
+    dialogueText.textContent = message.text;
     dialogueBox.appendChild(dialogueText);
     
     container.appendChild(dialogueBox);
-    
-    // Enable key dragging
-    const floatingKey = document.getElementById('floating-key');
-    floatingKey.draggable = true;
-    
-    updateKeyPosition();
-    
-    // Add replay button if dialogue is complete
-    if (gameState.dialogueState.currentIndex === currentDialogue.messages.length - 1) {
-        gameState.dialogueState.isComplete = true;
-        addReplayButton();
-        updateKeyVisibility();
+}
+
+function updateKeyPosition() {
+    const keyContainer = document.getElementById('key-container');
+    keyContainer.style.top = "25%";
+    keyContainer.style.left = "50%";
+}
+
+function setupGameClickHandler() {
+    const gameArea = document.getElementById('game-area');
+    const eventType = isMobileDevice ? 'touchstart' : 'click';
+    gameArea.addEventListener(eventType, handleGameInteraction);
+}
+
+function handleGameInteraction() {
+    if (gameState.currentType === 'dialogue' && 
+        !gameState.isDragging && 
+        !gameState.dialogueState.isComplete) {
+        dialogueSound.currentTime = 0;
+        dialogueSound.play();
+        progressDialogue();
     }
 }
 
-// Modify setupGameClickHandler to prevent unwanted clicks
-function setupGameClickHandler() {
-    const gameArea = document.getElementById('game-area');
-    gameArea.addEventListener('click', (e) => {
-        // Only process click if we're in dialogue mode and dialogue isn't complete
-        if (gameState.currentType === 'dialogue' && 
-            !gameState.isDragging && 
-            !gameState.dialogueState.isComplete) {
-            dialogueSound.currentTime = 0;
-            dialogueSound.play();
-            progressDialogue();
-        }
-    });
-}
-
-// New function to handle keyboard controls
 function setupKeyboardControls() {
     document.addEventListener('keydown', (e) => {
-        // Space bar for dialogue progression
         if (e.code === 'Space' && gameState.currentType === 'dialogue' && !gameState.isDragging) {
             progressDialogue();
         }
         
         if ((gameState.dialogueState.isComplete || gameState.currentType === 'character') 
             && e.key >= '1' && e.key <= '6') {
-            const num = parseInt(e.key);
-            handleNumberKeySelection(num);
+            handleNumberKeySelection(parseInt(e.key));
         }
     });
 }
 
-// Handle number key selection
 function handleNumberKeySelection(num) {
-    const correctZone = gameState.currentType === 'dialogue' 
-        ? gameState.dialogueState.currentDialogue.correctZone
-        : gameState.characterState.currentCharacter.correctZone;
+    const correctZone = getCorrectZone();
+    const targetZone = num === 6 
+        ? document.getElementById('not-pancasila')
+        : document.getElementById(`pancasila${num}`);
     
-    let targetZone;
-    if (num === 6) {
-        targetZone = document.getElementById('not-pancasila');
-    } else {
-        targetZone = document.getElementById(`pancasila${num}`);
-    }
-    
-    if (targetZone.id === correctZone) {
-        handleCorrectDrop(targetZone);
-    } else {
-        handleIncorrectDrop();
-    }
+    targetZone.id === correctZone ? handleCorrectDrop(targetZone) : handleIncorrectDrop();
 }
 
-// Update drag and drop handlers
-function handleDragStart(e) {
-    gameState.isDragging = true;
-    e.target.classList.add('dragging');
-    e.dataTransfer.setData('text/plain', 'key');
-    
-    // Create and show smaller drag image
-    const dragImage = new Image();
-    dragImage.src = '../../public/asset/key.png';
-    
-    // Create a temporary canvas to resize the drag image
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 32;  // Set to desired width
-    canvas.height = 32; // Set to desired height
-    
-    // Draw the image at the smaller size
-    dragImage.onload = () => {
-        ctx.drawImage(dragImage, 0, 0, 32, 32);
-    };
-    
-    e.dataTransfer.setDragImage(canvas, 16, 16); // Center point of the 32x32 image
-}
-
-function handleDragEnd(e) {
-    gameState.isDragging = false;
-    e.target.classList.remove('dragging');
-}
-
-function handleDrop(e) {
-    e.preventDefault();
-    this.classList.remove('drag-over');
-    
-    // Only process drop if dialogue is complete or in character mode
-    if (gameState.dialogueState.isComplete || gameState.currentType === 'character') {
-        const correctZone = gameState.currentType === 'dialogue' 
-            ? gameState.dialogueState.currentDialogue.correctZone
-            : gameState.characterState.currentCharacter.correctZone;
-
-        if (this.id === correctZone) {
-            handleCorrectDrop(this);
-        } else {
-            handleIncorrectDrop();
-        }
-    }
-}
-
-// Handle correct drop with plus animation
-function handleCorrectDrop(dropZone) {
-    if (isCooldownActive) return;  // Prevent score increase during cooldown
-
-    isCooldownActive = true;  // Set cooldown active
-
-    const chestImg = dropZone.querySelector('img');
-    chestImg.src = '../../public/asset/opened_chest.png';
-
-    // Play success sound
-    cashRegister.currentTime = 0;
-    cashRegister.play();
-
-    // Create and show smaller drag image
-    const plusImg = document.createElement('img');
-    plusImg.src = '../../public/asset/plus.png';
-    plusImg.className = 'plus-animation';
-
-    // Position plus image relative to chest
-    const chestRect = chestImg.getBoundingClientRect();
-    const verticalOffsetPercentage = 30; // Vertical offset percentage relative to chest height
-    const horizontalOffsetPercentage = 60; // Horizontal offset percentage relative to chest width
-
-    plusImg.style.top = `${chestRect.top - (chestRect.height * verticalOffsetPercentage / 100)}px`;
-    plusImg.style.left = `${chestRect.left + (chestRect.width * horizontalOffsetPercentage / 100)}px`;
-
-    document.body.appendChild(plusImg);
-
-    // Add visible class to trigger animation
-    setTimeout(() => {
-        plusImg.classList.add('visible');
-    }, 100);
-
-    // Remove plus image after animation
-    setTimeout(() => {
-        plusImg.classList.add('removing');
-        setTimeout(() => plusImg.remove(), 500); // Remove after fading out
-    }, 1000);
-
-    updateScore(100);
-
-    // Reset chest image and setup next state
-    setTimeout(() => {
-        chestImg.src = `../../public/asset/c${dropZone.id.slice(-1)}.png`;
-        setupRandomState();
-    }, 1500);
-}
-
-
-// Handle incorrect drop
-function handleIncorrectDrop() {
-    // Play wrong sound
-    wrongSound.currentTime = 0;
-    wrongSound.play();
-
-    if (lives > 0) {
-        lives--;
-        updateLives();
-    }
-    
-    if (lives === 0) {
-        gameOver();
-    }
-}
-
-// Add replay button
-function addReplayButton() {
-    const replayButton = document.createElement('img');
-    replayButton.src = '../../public/asset/replay.png';
-    replayButton.id = 'replay-button';
-    
-    // Add click effect
-    replayButton.addEventListener('mousedown', () => {
-        clickSound.currentTime = 0;
-        clickSound.play();
-    });
-
-    replayButton.addEventListener('mouseup', () => {
-        restartDialogue();
-        replayButton.remove();
-    });
-
-    document.getElementById('character-container').appendChild(replayButton);
-}
-
-
-// Restart dialogue
-function restartDialogue() {
-    gameState.dialogueState.currentIndex = 0;
-    gameState.dialogueState.isComplete = false;
-    showDialogue();
-    updateKeyVisibility();
-}
-
-// Prevent multiple clicks from advancing the dialogue too quickly
-function progressDialogue() {
-    if (gameState.dialogueState.currentIndex < gameState.dialogueState.currentDialogue.messages.length - 1) {
-        gameState.dialogueState.currentIndex++;
-        showDialogue();
-    }
-}
-
-// Update key visibility based on game state
 function updateKeyVisibility() {
     const keyContainer = document.getElementById('key-container');
-    if (gameState.dialogueState.isComplete || gameState.currentType === 'character') {
-        keyContainer.style.display = 'block';
-    } else {
-        keyContainer.style.display = 'none';
+    const isInteractive = gameState.dialogueState.isComplete || gameState.currentType === 'character';
+    
+    keyContainer.style.display = isInteractive && !isMobileDevice ? 'block' : 'none';
+    
+    if (isMobileDevice) {
+        const dropZones = document.querySelectorAll('.drop-zone');
+        dropZones.forEach(zone => {
+            zone.classList.toggle('tappable', isInteractive);
+        });
     }
 }
 
-// Update score display
 function updateScore(points) {
     const scoreElement = document.getElementById('score');
     const startScore = score;
     const targetScore = score + points;
-    const incrementSpeed = 10; // Adjust this to control speed of score increment
-    
+    const incrementSpeed = 10;
     let currentScore = startScore;
     
     const incrementInterval = setInterval(() => {
@@ -532,10 +434,9 @@ function updateScore(points) {
         }
     }, incrementSpeed);
     
-    score = targetScore; // Update the score variable
+    score = targetScore;
 }
 
-// Setup lives display
 function setupLives() {
     const livesContainer = document.getElementById('lives');
     livesContainer.innerHTML = '';
@@ -549,15 +450,48 @@ function setupLives() {
     }
 }
 
-// Update lives display
 function updateLives() {
     const livesImages = document.querySelectorAll('.life');
-    for (let i = 0; i < 3; i++) {
-        livesImages[i].src = i < lives ? '../../public/asset/life.png' : '../../public/asset/unlife.png';
+    livesImages.forEach((img, i) => {
+        img.src = i < lives ? '../../public/asset/life.png' : '../../public/asset/unlife.png';
+    });
+}
+
+function addReplayButton() {
+    const replayButton = document.createElement('img');
+    replayButton.src = '../../public/asset/replay.png';
+    replayButton.id = 'replay-button';
+    
+    replayButton.addEventListener('mousedown', () => {
+        clickSound.currentTime = 0;
+        clickSound.play();
+    });
+
+    replayButton.addEventListener('mouseup', () => {
+        restartDialogue();
+        replayButton.remove();
+    });
+
+    document.getElementById('character-container').appendChild(replayButton);
+}
+
+function restartDialogue() {
+    gameState.dialogueState.currentIndex = 0;
+    gameState.dialogueState.isComplete = false;
+    showDialogue();
+    updateKeyVisibility();
+}
+
+function progressDialogue() {
+    if (!gameState.isDragging && 
+        gameState.currentType === 'dialogue' && 
+        gameState.dialogueState.currentIndex < gameState.dialogueState.currentDialogue.messages.length - 1) {
+        
+        gameState.dialogueState.currentIndex++;
+        showDialogue();
     }
 }
 
-// Progress to next character
 function nextCharacter() {
     currentCharacterIndex++;
     
@@ -568,7 +502,6 @@ function nextCharacter() {
     }
 }
 
-// Show game completion
 function showGameComplete() {
     const gameArea = document.getElementById('game-area');
     gameArea.innerHTML = `
@@ -580,7 +513,6 @@ function showGameComplete() {
     `;
 }
 
-// Game over function
 function gameOver() {
     const gameArea = document.getElementById('game-area');
     gameArea.innerHTML = `
@@ -592,7 +524,6 @@ function gameOver() {
     `;
 }
 
-// Update Main Lagi button click handler
 function restartGame() {
     clickSound.currentTime = 0;
     clickSound.play();
@@ -602,5 +533,32 @@ function restartGame() {
     initializeGame();
 }
 
-// Initialize game when document is loaded
-document.addEventListener('DOMContentLoaded', initializeGame);
+document.addEventListener('DOMContentLoaded', () => {
+    const cloudL = document.getElementById('cloudL');
+    const cloudR = document.getElementById('cloudR');
+    const playButton = document.getElementById('play-button');
+    const learnButton = document.getElementById('learn-button');
+    
+    playButton.style.pointerEvents = 'none';
+    learnButton.style.pointerEvents = 'none';
+    
+    document.body.addEventListener('click', () => {
+        const chestOpen = document.getElementById('chestOpen');
+        const pirateTheme = document.getElementById('pirateTheme');
+        
+        chestOpen.currentTime = 0;
+        chestOpen.play();
+        pirateTheme.currentTime = 0;
+        pirateTheme.play();
+        
+        cloudL.style.transition = 'left 1s ease';
+        cloudR.style.transition = 'right 1s ease';
+        cloudL.style.left = '-100%';
+        cloudR.style.right = '-100%';
+        
+        setTimeout(() => {
+            playButton.style.pointerEvents = 'auto';
+            learnButton.style.pointerEvents = 'auto';
+        }, 1000);
+    }, { once: true });
+});

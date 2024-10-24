@@ -11,14 +11,9 @@
     <div id="cloudR" class="cloud"></div>
 
     <div class="landing-container">
-        <!-- Play Now button -->
         <img src="./public/asset/playnow.png" id="play-button" class="menu-button" onclick="playClickSound(); startGame();" alt="Play Now">
-        
-        <!-- Learn More button -->
-        <img src="./public/asset/learnmore.png" id="learn-button" class="menu-button" onclick="playClickSound(); showGuide();" alt="Learn More">
+                <img src="./public/asset/learnmore.png" id="learn-button" class="menu-button" onclick="playClickSound(); showGuide();" alt="Learn More">
     </div>
-
-    <!-- Guide overlay -->
     <div id="guide-overlay" class="guide-overlay hidden">
         <div class="guide-content">
             <img src="./public/asset/xbutton.png" class="close-button" onclick="playClickSound(); hideGuide();" alt="Close">
@@ -49,8 +44,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Audio elements -->
     <audio id="pirateTheme" loop>
         <source src="./public/asset/piratetheme.mp3" type="audio/mpeg">
     </audio>
@@ -72,12 +65,9 @@
         }
 
         function startGame() {
-            // Stop the pirate theme if it's playing
             const pirateTheme = document.getElementById('pirateTheme');
             pirateTheme.pause();
             pirateTheme.currentTime = 0;
-            
-            // Redirect to game page
             window.location.href = './public/html/game.html';
         }
 
@@ -99,7 +89,6 @@
             const playButton = document.getElementById('play-button');
             const learnButton = document.getElementById('learn-button');
             
-            // Block pointer events initially
             playButton.style.pointerEvents = 'none';
             learnButton.style.pointerEvents = 'none';
             
@@ -107,26 +96,22 @@
                 const chestOpen = document.getElementById('chestOpen');
                 const pirateTheme = document.getElementById('pirateTheme');
                 
-                // Play sounds simultaneously
                 chestOpen.currentTime = 0;
                 chestOpen.play();
                 pirateTheme.currentTime = 0;
                 pirateTheme.play();
                 
-                // Remove clouds with a curtain effect
                 cloudL.style.transition = 'left 1s ease';
                 cloudR.style.transition = 'right 1s ease';
                 cloudL.style.left = '-100%';
                 cloudR.style.right = '-100%';
                 
-                // Enable buttons after clouds disappear
                 setTimeout(() => {
                     playButton.style.pointerEvents = 'auto';
                     learnButton.style.pointerEvents = 'auto';
-                }, 1000); // Adjust delay based on transition speed
+                }, 1000); 
             }, { once: true });
 
-            // Listen for the end of the transition to hide the clouds
             cloudL.addEventListener('transitionend', () => {
                 cloudL.style.display = 'none';
             });
@@ -135,7 +120,6 @@
                 cloudR.style.display = 'none';
             });
         });
-
     </script>
 </body>
 </html>
