@@ -47,28 +47,17 @@ Permainan ini sepenuhnya berbasis browser. Semua asset disimpan secara lokal, da
 Game **Virtue's Choice** telah dioptimalkan untuk berbagai ukuran layar dan perangkat. Berikut adalah daftar perangkat dengan resolusi spesifik yang didukung dan bagaimana game akan menyesuaikan tampilannya:
 
 ### Desktop/Laptop
-- **Resolusi Standar (1920px x 1080px)**: Semua elemen UI diatur dalam ukuran standar, dengan rasio aspek dan tata letak tetap pada tampilan maksimal.
-- **Resolusi 1440px x 900px**: Game akan menyesuaikan tata letaknya dengan menjaga proporsi elemen seperti karakter dan drop zone.
-- **Resolusi 1366px x 768px**: Tata letak tetap responsif dengan sedikit penyesuaian pada ukuran karakter dan teks agar tetap terlihat jelas.
-
-### Tablet
-- **1024px x 768px**: Antarmuka dioptimalkan untuk layar tablet dengan proporsi elemen yang sesuai, memastikan drag-and-drop tetap mudah digunakan.
-- **800px x 600px**: Tata letak disesuaikan dengan elemen yang lebih ringkas, seperti pengurangan jarak antara karakter dan drop zone.
+- **Resolusi 1280px x 800px (Standar desktop)** (Nest Hub Max)
+- **Resolusi 1440px x 900px**
+- **Resolusi 1024px x 600px** (Nest Hub)
 
 ### Mobile (Potrait)
-- **375px x 667px (iPhone 8)**: Tata letak akan lebih rapat dengan tombol yang mudah diakses dan gambar yang disesuaikan untuk tampilan layar kecil.
-- **390px x 844px (iPhone 12)**: Ukuran teks dan elemen interaktif akan otomatis diperbesar untuk pengalaman bermain yang optimal.
-- **414px x 896px (iPhone 11 Pro Max)**: Antarmuka akan disesuaikan dengan layar yang lebih luas, memastikan semua elemen terlihat dan mudah digunakan.
-
-### Mobile (Landscape)
-- **667px x 375px (iPhone 8)**: Permainan tetap responsif, dengan ukuran karakter dan drop zone diatur agar mudah dijangkau.
-- **844px x 390px (iPhone 12)**: Game tetap dapat dimainkan dengan tampilan yang disesuaikan pada mode landscape, memastikan elemen tetap proporsional.
-
-### Tablet (Landscape)
-- **1366px x 1024px (iPad Pro)**: Game akan menampilkan tata letak layar penuh dengan elemen yang diperbesar agar nyaman digunakan dengan kontrol sentuh.
+- **375px x 667px (iPhone 8)**
+- **390px x 844px (iPhone 12)**
+- **414px x 896px (iPhone 11 Pro Max)**
+- **425px x 824px** (Mobile L)
 
 Permainan ini telah diuji pada berbagai perangkat dengan resolusi yang berbeda untuk memastikan pengalaman pengguna yang mulus, baik di perangkat desktop, tablet, maupun ponsel.
-
 
 ## Author
 
