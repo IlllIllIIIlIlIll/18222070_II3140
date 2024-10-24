@@ -2,8 +2,8 @@
 let characters = [
     {
         id: 'budiono',
-        activeImage: '../asset/TBudiono.png',
-        waitingImage: '../asset/WBudiono.png',
+        activeImage: '../../public/asset/TBudiono.png',
+        waitingImage: '../../public/asset/WBudiono.png',
         statement: 'Saya selalu berusaha untuk menghargai dan menghormati perbedaan agama serta kepercayaan yang ada di sekitar saya.',
         correctZone: 'pancasila1'
     }
@@ -14,14 +14,14 @@ let dialogues = [
         characters: [
             {
                 id: 'budiono',
-                activeImage: '../asset/TBudiono.png',
-                waitingImage: '../asset/WBudiono.png',
+                activeImage: '../../public/asset/TBudiono.png',
+                waitingImage: '../../public/asset/WBudiono.png',
                 position: 'right'
             },
             {
                 id: 'fufafu',
-                activeImage: '../asset/TFufafu.png',
-                waitingImage: '../asset/WFufafu.png',
+                activeImage: '../../public/asset/TFufafu.png',
+                waitingImage: '../../public/asset/WFufafu.png',
                 position: 'left'
             }
         ],
@@ -45,14 +45,14 @@ let dialogues = [
         characters: [
             {
                 id: 'siregar',
-                activeImage: '../asset/TSiregar.png',
-                waitingImage: '../asset/WSiregar.png',
+                activeImage: '../../public/asset/TSiregar.png',
+                waitingImage: '../../public/asset/WSiregar.png',
                 position: 'right'
             },
             {
                 id: 'fafafu',
-                activeImage: '../asset/TFafafu.png',
-                waitingImage: '../asset/WFafafu.png',
+                activeImage: '../../public/asset/TFafafu.png',
+                waitingImage: '../../public/asset/WFafafu.png',
                 position: 'left'
             }
         ],
@@ -363,7 +363,7 @@ function handleDragStart(e) {
     
     // Create and show smaller drag image
     const dragImage = new Image();
-    dragImage.src = '../asset/key.png';
+    dragImage.src = '../../public/asset/key.png';
     
     // Create a temporary canvas to resize the drag image
     const canvas = document.createElement('canvas');
@@ -409,7 +409,7 @@ function handleCorrectDrop(dropZone) {
     isCooldownActive = true;  // Set cooldown active
 
     const chestImg = dropZone.querySelector('img');
-    chestImg.src = '../asset/opened_chest.png';
+    chestImg.src = '../../public/asset/opened_chest.png';
 
     // Play success sound
     cashRegister.currentTime = 0;
@@ -417,7 +417,7 @@ function handleCorrectDrop(dropZone) {
 
     // Create and show smaller drag image
     const plusImg = document.createElement('img');
-    plusImg.src = '../asset/plus.png';
+    plusImg.src = '../../public/asset/plus.png';
     plusImg.className = 'plus-animation';
 
     // Position plus image relative to chest
@@ -445,7 +445,7 @@ function handleCorrectDrop(dropZone) {
 
     // Reset chest image and setup next state
     setTimeout(() => {
-        chestImg.src = `../asset/c${dropZone.id.slice(-1)}.png`;
+        chestImg.src = `../../public/asset/c${dropZone.id.slice(-1)}.png`;
         setupRandomState();
     }, 1500);
 }
@@ -470,7 +470,7 @@ function handleIncorrectDrop() {
 // Add replay button
 function addReplayButton() {
     const replayButton = document.createElement('img');
-    replayButton.src = '../asset/replay.png';
+    replayButton.src = '../../public/asset/replay.png';
     replayButton.id = 'replay-button';
     
     // Add click effect
@@ -542,7 +542,7 @@ function setupLives() {
     
     for (let i = 0; i < 3; i++) {
         const lifeImg = document.createElement('img');
-        lifeImg.src = '../asset/life.png';
+        lifeImg.src = '../../public/asset/life.png';
         lifeImg.classList.add('life');
         lifeImg.alt = 'Nyawa';
         livesContainer.appendChild(lifeImg);
@@ -553,7 +553,7 @@ function setupLives() {
 function updateLives() {
     const livesImages = document.querySelectorAll('.life');
     for (let i = 0; i < 3; i++) {
-        livesImages[i].src = i < lives ? '../asset/life.png' : '../asset/unlife.png';
+        livesImages[i].src = i < lives ? '../../public/asset/life.png' : '../../public/asset/unlife.png';
     }
 }
 

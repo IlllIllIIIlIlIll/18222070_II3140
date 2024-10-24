@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtue's Choice</title>
-    <link rel="stylesheet" href="public/css/styles.css">
+    <link rel="stylesheet" href="./public/css/styles.css">
 </head>
 <body class="index-background">
     <div id="cloudL" class="cloud"></div>
@@ -12,16 +12,16 @@
 
     <div class="landing-container">
         <!-- Play Now button -->
-        <img src="public/asset/playnow.png" id="play-button" class="menu-button" onclick="playClickSound(); startGame();" alt="Play Now">
+        <img src="./public/asset/playnow.png" id="play-button" class="menu-button" onclick="playClickSound(); startGame();" alt="Play Now">
         
         <!-- Learn More button -->
-        <img src="public/asset/learnmore.png" id="learn-button" class="menu-button" onclick="playClickSound(); showGuide();" alt="Learn More">
+        <img src="./public/asset/learnmore.png" id="learn-button" class="menu-button" onclick="playClickSound(); showGuide();" alt="Learn More">
     </div>
 
     <!-- Guide overlay -->
     <div id="guide-overlay" class="guide-overlay hidden">
         <div class="guide-content">
-            <img src="public/asset/xbutton.png" class="close-button" onclick="playClickSound(); hideGuide();" alt="Close">
+            <img src="./public/asset/xbutton.png" class="close-button" onclick="playClickSound(); hideGuide();" alt="Close">
             <div class="guide-scroll">
                 <h2>How to Play</h2>
                 <div class="guide-section">
@@ -52,16 +52,16 @@
 
     <!-- Audio elements -->
     <audio id="pirateTheme" loop>
-        <source src="public/asset/piratetheme.mp3" type="audio/mpeg">
+        <source src="./public/asset/piratetheme.mp3" type="audio/mpeg">
     </audio>
     <audio id="chestOpen">
-        <source src="public/asset/chestopen.mp3" type="audio/mpeg">
+        <source src="./public/asset/chestopen.mp3" type="audio/mpeg">
     </audio>
     <audio id="clickSound">
-        <source src="public/asset/click.mp3" type="audio/mpeg">
+        <source src="./public/asset/click.mp3" type="audio/mpeg">
     </audio>
     <audio id="gameTheme" loop>
-        <source src="public/asset/gametheme.mp3" type="audio/mpeg">
+        <source src="./public/asset/gametheme.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -78,7 +78,7 @@
             pirateTheme.currentTime = 0;
             
             // Redirect to game page
-            window.location.href = 'public/html/game.html';
+            window.location.href = './public/html/game.html';
         }
 
         function showGuide() {

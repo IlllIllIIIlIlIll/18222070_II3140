@@ -7,7 +7,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     /* background-color: #e6e6e6; */
-    background-image: url('../asset/sea.png');
+    background-image: url('../../public/asset/sea.png');
     margin: 0;
     padding: 0;
     display: flex;
@@ -21,7 +21,7 @@ body {
 
 /* Background untuk halaman index */
 .index-background {
-    background-image: url('../asset/ppap.png');
+    background-image: url('../../public/asset/ppap.png');
     background-size: cover;
     background-position: center 40%; /* Move the background down by 20% */
     background-repeat: no-repeat;
@@ -30,7 +30,7 @@ body {
 
 /* Background untuk halaman game */
 .game-background {
-    background-image: url('../asset/sea.png');
+    background-image: url('../../public/asset/sea.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -43,7 +43,7 @@ body {
     height: calc(80vw * 9/16); /* Maintain 16:9 ratio */
     max-width: 1280px; /* Maximum width */
     max-height: 720px; /* Maximum height */
-    background-image: url('../asset/piratedeck.jpg');
+    background-image: url('../../public/asset/piratedeck.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -57,7 +57,7 @@ body {
 
     /* Border with wooden frame */
     border: 30px solid transparent; /* Create space for the border */
-    border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+    border-image: url('../../public/asset/woodenframe.png') 150 round; /* Apply the wooden frame */
     border-image-slice: 50; /* Slice 150px from the wooden frame image */
 }
 
@@ -76,7 +76,7 @@ body {
 /* Import the custom font Driftwood */
 @font-face {
     font-family: 'Campfire';
-    src: url('../asset/Campfire.ttf') format('truetype');
+    src: url('../../public/asset/Campfire.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -93,13 +93,13 @@ body {
 
 #cloudL {
     left: 0;
-    background-image: url('../asset/cloudL.png');
+    background-image: url('../../public/asset/cloudL.png');
     transition: left 1s ease;  /* Add transition for smooth exit */
 }
 
 #cloudR {
     right: 0;
-    background-image: url('../asset/cloudR.png');
+    background-image: url('../../public/asset/cloudR.png');
     transition: right 1s ease;  /* Add transition for smooth exit */
 }
 
@@ -136,7 +136,7 @@ body {
 
     width: 500px; /* Adjust as needed */
     height: 200px; /* Adjust as needed */
-    background-image: url('../asset/woodenplank.png');
+    background-image: url('../../public/asset/woodenplank.png');
     background-size: cover; /* Make sure the image covers the div */
     background-repeat: no-repeat;
     background-size: 90% 90%; /* 50% of the container's width and height */
@@ -151,7 +151,7 @@ body {
 
     width: 700px; /* Same width as woodenplank */
     height: 100px; /* Same height as woodenplank */
-    background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+    background-image: url('../../public/asset/woodenplank2.png'); /* Use the new image */
     background-size: cover;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -583,7 +583,7 @@ body {
         top:47%;
         /* Border with wooden frame */
         border: 30px solid transparent; /* Create space for the border */
-        border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+        border-image: url('../../public/asset/woodenframe.png') 150 round; /* Apply the wooden frame */
         border-image-slice: 50; /* Slice 150px from the wooden frame image */
     }
 
@@ -597,7 +597,7 @@ body {
         height: auto; /* Allow height to adjust */
         min-height: 100px; /* Ensures it doesn't collapse *
     
-        background-image: url('../asset/woodenplank.png');
+        background-image: url('../../public/asset/woodenplank.png');
         background-size: cover; /* Make sure the image covers the div */
         background-repeat: no-repeat;
         z-index: 10;
@@ -612,7 +612,7 @@ body {
         width: 600px; /* Same width as woodenplank */
         height: auto; /* Allow height to adjust */
         min-height: 100px; /* Ensures it doesn't collapse *
-        background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+        background-image: url('../../public/asset/woodenplank2.png'); /* Use the new image */
         background-size: cover;
         background-repeat: no-repeat;
         background-size: 100% 100%;
@@ -752,7 +752,7 @@ body {
     }
     
     body {
-        background-image: url('../asset/phoneL.png') !important;
+        background-image: url('../../public/asset/phoneL.png') !important;
         background-size: 100%; /* Adjust the size to fit the screen */
         background-position: center; /* Ensure the background is centered */
         background-repeat: no-repeat; /* Prevent the background from repeating */
@@ -760,7 +760,7 @@ body {
 
     /* Remove the background image for the game page */
     body.game-background {
-        background-image: url('../asset/sea.png') !important;
+        background-image: url('../../public/asset/sea.png') !important;
         background-size: 360%;
     }
 
@@ -790,7 +790,7 @@ body {
         top: 50%;
 
         border: 15px solid transparent; /* Create space for the border */
-        border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+        border-image: url('../../public/asset/woodenframe.png') 150 round; /* Apply the wooden frame */
         border-image-slice: 50; /* Slice 150px from the wooden frame image */
     }
 
@@ -804,7 +804,7 @@ body {
         height: auto; /* Allow height to adjust */
         min-height: 90px; /* Ensures it doesn't collapse *
     
-        background-image: url('../asset/woodenplank.png');
+        background-image: url('../../public/asset/woodenplank.png');
         background-size: cover; /* Make sure the image covers the div */
         background-repeat: no-repeat;
         z-index: 10;
@@ -819,7 +819,7 @@ body {
         width: 250px; /* Same width as woodenplank */
         height: auto; /* Allow height to adjust */
         min-height: 50px; /* Ensures it doesn't collapse *
-        background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+        background-image: url('../../public/asset/woodenplank2.png'); /* Use the new image */
         background-size: cover;
         background-repeat: no-repeat;
         background-size: 100% 100%;
@@ -962,7 +962,7 @@ body {
     }
 
     body {
-        background-image: url('../asset/ip12.png') !important;
+        background-image: url('../../public/asset/ip12.png') !important;
         background-size: 100%; /* Adjust the size to fit the screen */
         background-position: center; /* Ensure the background is centered */
         background-repeat: no-repeat; /* Prevent the background from repeating */
@@ -970,7 +970,7 @@ body {
 
     /* Remove the background image for the game page */
     body.game-background {
-        background-image: url('../asset/sea.png') !important;
+        background-image: url('../../public/asset/sea.png') !important;
         background-size: 400%;
     }
 
@@ -1001,7 +1001,7 @@ body {
 
         /* Border with wooden frame */
         border: 13px solid transparent; /* Create space for the border */
-        border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+        border-image: url('../../public/asset/woodenframe.png') 150 round; /* Apply the wooden frame */
         border-image-slice: 50; /* Slice 150px from the wooden frame image */
     }
 
@@ -1015,7 +1015,7 @@ body {
         height: auto; /* Allow height to adjust */
         min-height: 61px; /* Ensures it doesn't collapse *
     
-        background-image: url('../asset/woodenplank.png');
+        background-image: url('../../public/asset/woodenplank.png');
         background-size: cover; /* Make sure the image covers the div */
         background-repeat: no-repeat;
         z-index: 10;
@@ -1030,7 +1030,7 @@ body {
         width: 250px; /* Same width as woodenplank */
         height: auto; /* Allow height to adjust */
         min-height: 30px; /* Ensures it doesn't collapse *
-        background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+        background-image: url('../../public/asset/woodenplank2.png'); /* Use the new image */
         background-size: cover;
         background-repeat: no-repeat;
         background-size: 100% 100%;
@@ -1172,7 +1172,7 @@ body {
     }
 
     body {
-        background-image: url('../asset/ip12.png') !important;
+        background-image: url('../../public/asset/ip12.png') !important;
         background-size: 100%; /* Adjust the size to fit the screen */
         background-position: center; /* Ensure the background is centered */
         background-repeat: no-repeat; /* Prevent the background from repeating */
@@ -1180,7 +1180,7 @@ body {
 
     /* Remove the background image for the game page */
     body.game-background {
-        background-image: url('../asset/sea.png') !important;
+        background-image: url('../../public/asset/sea.png') !important;
         background-size: 400%;
     }
 
@@ -1211,7 +1211,7 @@ body {
 
         /* Border with wooden frame */
         border: 13px solid transparent; /* Create space for the border */
-        border-image: url('../asset/woodenframe.png') 150 round; /* Apply the wooden frame */
+        border-image: url('../../public/asset/woodenframe.png') 150 round; /* Apply the wooden frame */
         border-image-slice: 50; /* Slice 150px from the wooden frame image */
     }
 
@@ -1225,7 +1225,7 @@ body {
         height: auto; /* Allow height to adjust */
         min-height: 61px; /* Ensures it doesn't collapse *
     
-        background-image: url('../asset/woodenplank.png');
+        background-image: url('../../public/asset/woodenplank.png');
         background-size: cover; /* Make sure the image covers the div */
         background-repeat: no-repeat;
         z-index: 10;
@@ -1240,7 +1240,7 @@ body {
         width: 250px; /* Same width as woodenplank */
         height: auto; /* Allow height to adjust */
         min-height: 30px; /* Ensures it doesn't collapse *
-        background-image: url('../asset/woodenplank2.png'); /* Use the new image */
+        background-image: url('../../public/asset/woodenplank2.png'); /* Use the new image */
         background-size: cover;
         background-repeat: no-repeat;
         background-size: 100% 100%;
