@@ -516,10 +516,15 @@ function showGameComplete() {
 function gameOver() {
     const gameArea = document.getElementById('game-area');
     gameArea.innerHTML = `
-        <div class="game-over-message">
-            <h2>Game Over</h2>
-            <p>Skor Akhir: ${score}</p>
-            <button onclick="location.reload()">Main Lagi</button>
+        <div class="game-over-container">
+            <div class="game-over-message">
+                <h2>Game Over</h2>
+                <p>Skor Akhir: <span id="final-score">${score}</span></p>
+            </div>
+            <div class="save-score-actions">
+                <button onclick="showSaveScoreModal()">Simpan Skor</button>
+                <button onclick="location.reload()">Main Lagi</button>
+            </div>
         </div>
     `;
 }
@@ -562,3 +567,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }, { once: true });
 });
+
+function showSaveScoreModal() {
+    const modal = document.createElement('div');
+    modal.classList.add('save-score-overlay');
+
+    modal.innerHTML = `
+        <div class="save-score-content">
+            <img src="../../public/asset/xbutton.png" class="close-button" onclick="closeModal()" alt="Close">
+            <div class="save-score-scroll">
+                <h2>Simpan Skor Anda</h2>
+                <p>Anda perlu masuk untuk menyimpan skor Anda.</p>
+                
+                <div class="auth-options">
+                    <button class="auth-button" onclick="showLogin()">Login</button>
+                    <button class="auth-button" onclick="showSignup()">Sign Up</button>
+                </div>
+
+                <div id="login-form" class="auth-form hidden">
+                    <h3>Login</h3>
+                    <div class="form-group">
+                        <label for="login-email">Email:</label>
+                        <input type="email" id="login-email" placeholder="Masukkan email">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password:</label>
+                        <input type="password" id="login-password" placeholder="Masukkan password">
+                    </div>
+                    <button class="submit-button" onclick="submitLogin()">Login</button>
+                </div>
+
+                <div id="signup-form" class="auth-form hidden">
+                    <h3>Sign Up</h3>
+                    <div class="form-group">
+                        <label for="signup-email">Email:</label>
+                        <input type="email" id="signup-email" placeholder="Masukkan email">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password:</label>
+                        <input type="password" id="signup-password" placeholder="Buat password">
+                    </div>
+                    <button class="submit-button" onclick="submitSignup()">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
+
+
+function closeModal() {
+    const modal = document.querySelector('.save-score-modal');
+    modal.remove();
+    document.getElementById('login-form').classList.add('hidden');
+    document.getElementById('signup-form').classList.add('hidden');
+}
+
+function showLogin() {
+    document.getElementById('login-form').classList.remove('hidden');
+    document.getElementById('signup-form').classList.add('hidden');
+}
+
+function showSignup() {
+    document.getElementById('signup-form').classList.remove('hidden');
+    document.getElementById('login-form').classList.add('hidden');
+}
+
+// Dummy functions for now
+function submitLogin() {
+    alert('Login process triggered!');
+    closeModal();
+}
+
+function submitSignup() {
+    alert('Signup process triggered!');
+    closeModal();
+}

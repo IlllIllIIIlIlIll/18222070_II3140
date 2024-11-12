@@ -70,5 +70,46 @@
         <source src="../../public/asset/click.mp3" type="audio/mpeg">
     </audio>
     <script src="../../public/js/game.js"></script>
+
+    <!-- Game Over Screen with Save Score Button -->
+    <div class="game-over-message">
+        <h2>Game Over</h2>
+        <p>Skor Akhir: <span id="final-score">0000</span></p>
+        <button onclick="showSaveScoreModal()">Simpan Skor</button>
+        <button onclick="location.reload()">Main Lagi</button>
+    </div>
+
+    <!-- Save Score Modal -->
+    <div class="save-score-modal hidden" id="saveScoreModal">
+        <div class="modal-content">
+            <h2>Simpan Skor Anda</h2>
+            <p>Anda perlu masuk untuk menyimpan skor Anda.</p>
+            
+            <div class="auth-options">
+                <button onclick="showLogin()">Login</button>
+                <button onclick="showSignup()">Sign Up</button>
+            </div>
+
+            <div id="login-form" class="auth-form hidden">
+                <h3>Login</h3>
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" placeholder="Masukkan email">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" placeholder="Masukkan password">
+                <button onclick="submitLogin()">Login</button>
+            </div>
+
+            <div id="signup-form" class="auth-form hidden">
+                <h3>Sign Up</h3>
+                <label for="signup-email">Email:</label>
+                <input type="email" id="signup-email" placeholder="Masukkan email">
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" placeholder="Buat password">
+                <button onclick="submitSignup()">Sign Up</button>
+            </div>
+
+            <button class="close-modal" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
 </body>
 </html>

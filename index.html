@@ -11,9 +11,12 @@
     <div id="cloudR" class="cloud"></div>
 
     <div class="landing-container">
-        <img src="./public/asset/playnow.png" id="play-button" class="menu-button" onclick="playClickSound(); startGame();" alt="Play Now">
-                <img src="./public/asset/learnmore.png" id="learn-button" class="menu-button" onclick="playClickSound(); showGuide();" alt="Learn More">
+        <div class="button-group">
+            <img src="./public/asset/playnow.png" id="play-button" class="menu-button" onclick="playClickSound(); startGame();" alt="Play Now">
+            <img src="./public/asset/learnmore.png" id="learn-button" class="menu-button" onclick="playClickSound(); showGuide();" alt="Learn More">
+        </div>
     </div>
+    
     <div id="guide-overlay" class="guide-overlay hidden">
         <div class="guide-content">
             <img src="./public/asset/xbutton.png" class="close-button" onclick="playClickSound(); hideGuide();" alt="Close">
