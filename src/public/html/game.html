@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Virtue's Choice - Platform Interaktif Untuk Insan Berjiwa Kewarganegaraan">
     <title>Virtue's Choice</title>
-    <link rel="stylesheet" href="../../public/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body class="game-background">
     <div class="header-group">
@@ -20,63 +20,65 @@
         <div id="game-area">
             <div id="character-container" aria-label="Karakter Utama"></div>
             <div id="key-container" aria-label="Kunci Melayang">
-                <img src="../../public/asset/floatingkey.png" id="floating-key" alt="Kunci Melayang" draggable="true">
+                <img src="/asset/floatingkey.png" id="floating-key" alt="Kunci Melayang" draggable="true">
             </div>
 
             <div class="drop-zone-container" aria-label="Area Drop Peti Harta Karun">
                 <div class="drop-zone" id="pancasila1">
-                    <img src="../../public/asset/c1.png" alt="Sila Pertama Pancasila" draggable="false">
+                    <img src="/asset/c1.png" alt="Sila Pertama Pancasila" draggable="false">
                 </div>
                 <div class="drop-zone" id="pancasila2">
-                    <img src="../../public/asset/c2.png" alt="Sila Kedua Pancasila" draggable="false">
+                    <img src="/asset/c2.png" alt="Sila Kedua Pancasila" draggable="false">
                 </div>
                 <div class="drop-zone" id="pancasila3">
-                    <img src="../../public/asset/c3.png" alt="Sila Ketiga Pancasila" draggable="false">
+                    <img src="/asset/c3.png" alt="Sila Ketiga Pancasila" draggable="false">
                 </div>
                 <div class="drop-zone" id="pancasila4">
-                    <img src="../../public/asset/c4.png" alt="Sila Keempat Pancasila" draggable="false">
+                    <img src="/asset/c4.png" alt="Sila Keempat Pancasila" draggable="false">
                 </div>
                 <div class="drop-zone" id="pancasila5">
-                    <img src="../../public/asset/c5.png" alt="Sila Kelima Pancasila" draggable="false">
+                    <img src="/asset/c5.png" alt="Sila Kelima Pancasila" draggable="false">
                 </div>
                 <div class="drop-zone" id="not-pancasila">
-                    <img src="../../public/asset/c6.png" alt="Bukan Nilai Pancasila" draggable="false">
+                    <img src="/asset/c6.png" alt="Bukan Nilai Pancasila" draggable="false">
                 </div>
             </div>
 
             <div id="score-container">
                 <p id="score">Score: 0000</p>
                 <div id="lives">
-                    <img src="../../public/asset/life.png" class="life" alt="Nyawa">
-                    <img src="../../public/asset/life.png" class="life" alt="Nyawa">
-                    <img src="../../public/asset/life.png" class="life" alt="Nyawa">
+                    <img src="/asset/life.png" class="life" alt="Nyawa">
+                    <img src="/asset/life.png" class="life" alt="Nyawa">
+                    <img src="/asset/life.png" class="life" alt="Nyawa">
                 </div>
             </div>
         </div>
     </main>
     <audio id="gameTheme" loop>
-        <source src="../../public/asset/gametheme.mp3" type="audio/mpeg">
+        <source src="/asset/gametheme.mp3" type="audio/mpeg">
     </audio>
     <audio id="dialogueSound">
-        <source src="../../public/asset/dialogue.mp3" type="audio/mpeg">
+        <source src="/asset/dialogue.mp3" type="audio/mpeg">
     </audio>
     <audio id="cashRegister">
-        <source src="../../public/asset/cashregister.mp3" type="audio/mpeg">
+        <source src="/asset/cashregister.mp3" type="audio/mpeg">
     </audio>
     <audio id="wrongSound">
-        <source src="../../public/asset/wrong.mp3" type="audio/mpeg">
+        <source src="/asset/wrong.mp3" type="audio/mpeg">
     </audio>
     <audio id="clickSound">
-        <source src="../../public/asset/click.mp3" type="audio/mpeg">
+        <source src="/asset/click.mp3" type="audio/mpeg">
     </audio>
-    <script src="../../public/js/game.js"></script>
+    <script src="/js/game.js"></script>
 
     <!-- Game Over Screen with Save Score Button -->
-    <div class="game-over-message">
-        <h2>Game Over</h2>
-        <p>Skor Akhir: <span id="final-score">0000</span></p>
-        <button onclick="showSaveScoreModal()">Simpan Skor</button>
-        <button onclick="location.reload()">Main Lagi</button>
+    <div class="game-over-container hidden">
+        <div class="game-over-message">
+            <h2>Game Over</h2>
+            <p>Skor Akhir: <span id="final-score">0000</span></p>
+            <button onclick="showSaveScoreModal()">Simpan Skor</button>
+            <button onclick="location.reload()">Main Lagi</button>
+        </div>
     </div>
 
     <!-- Save Score Modal -->

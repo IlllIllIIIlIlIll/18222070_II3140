@@ -1,0 +1,26 @@
+{
+  "name": "18222070_ii3140",
+  "version": "1.0.0",
+  "description": "**Virtue's Choice** adalah platform permainan interaktif yang dirancang untuk membantu pemain memahami dan mengaplikasikan nilai-nilai **Pancasila** melalui skenario kehidupan sehari-hari. Permainan ini memberikan pengalaman interaktif di mana pemain harus mencocokkan dialog atau pernyataan karakter dengan sila yang tepat dari Pancasila.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.1",
+    "express-session": "^1.18.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "prisma": "^5.22.0"
+  }
+}

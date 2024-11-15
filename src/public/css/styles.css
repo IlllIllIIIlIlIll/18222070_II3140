@@ -5,7 +5,7 @@ html {
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-image: url('../../public/asset/sea.png');
+    background-image: url('/asset/sea.png');
     margin: 0;
     padding: 0;
     display: flex;
@@ -18,7 +18,7 @@ body {
 }
 
 .index-background {
-    background-image: url('../../public/asset/ppap.png');
+    background-image: url('/asset/ppap.png');
     background-size: cover;
     background-position: center 40%; 
     background-repeat: no-repeat;
@@ -26,7 +26,7 @@ body {
 }
 
 .game-background {
-    background-image: url('../../public/asset/sea.png');
+    background-image: url('/asset/sea.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -38,7 +38,7 @@ body {
     height: calc(80vw * 9/16); 
     max-width: 1280px;
     max-height: 720px; 
-    background-image: url('../../public/asset/piratedeck.jpg');
+    background-image: url('/asset/piratedeck.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -50,7 +50,7 @@ body {
     border-radius: 12px;
     overflow: hidden;
     border: 30px solid transparent; 
-    border-image: url('../../public/asset/woodenframe.png') 150 round; 
+    border-image: url('/asset/woodenframe.png') 150 round; 
     border-image-slice: 50;
 }
 
@@ -67,7 +67,7 @@ body {
 
 @font-face {
     font-family: 'Campfire';
-    src: url('../../public/asset/Campfire.ttf') format('truetype');
+    src: url('/asset/Campfire.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -84,13 +84,13 @@ body {
 
 #cloudL {
     left: 0;
-    background-image: url('../../public/asset/cloudL.png');
+    background-image: url('/asset/cloudL.png');
     transition: left 1s ease; 
 }
 
 #cloudR {
     right: 0;
-    background-image: url('../../public/asset/cloudR.png');
+    background-image: url('/asset/cloudR.png');
     transition: right 1s ease; 
 }
 
@@ -123,7 +123,7 @@ body {
     transform: translateX(-50%); 
     width: 500px; 
     height: 200px;
-    background-image: url('../../public/asset/woodenplank.png');
+    background-image: url('/asset/woodenplank.png');
     background-size: cover; 
     background-repeat: no-repeat;
     background-size: 90% 90%; 
@@ -137,7 +137,7 @@ body {
     transform: translateX(-50%); 
     width: 700px; 
     height: 100px; 
-    background-image: url('../../public/asset/woodenplank2.png'); 
+    background-image: url('/asset/woodenplank2.png'); 
     background-size: cover;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -524,6 +524,10 @@ body {
     justify-content: center;
     height: 100vh;
     color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .game-over-message {
@@ -547,13 +551,15 @@ body {
 }
 
 .save-score-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
     z-index: 1;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -694,7 +700,7 @@ body {
         margin-top: 2.5rem;
         top:47%;
         border: 30px solid transparent; 
-        border-image: url('../../public/asset/woodenframe.png') 150 round; 
+        border-image: url('/asset/woodenframe.png') 150 round; 
         border-image-slice: 50; 
     }
 
@@ -852,14 +858,14 @@ body {
     }
     
     body {
-        background-image: url('../../public/asset/phoneL.png') !important;
+        background-image: url('/asset/phoneL.png') !important;
         background-size: 100%; 
         background-position: center; 
         background-repeat: no-repeat; 
     }
 
     body.game-background {
-        background-image: url('../../public/asset/sea.png') !important;
+        background-image: url('/asset/sea.png') !important;
         background-size: 700%;
     }
 
@@ -879,10 +885,10 @@ body {
         margin-top: 2rem;
         left: 50%;
         top: 50%;
-        background-image: url('../../public/asset/GPhoneL.png');
+        background-image: url('/asset/GPhoneL.png');
 
         border: 15px solid transparent; 
-        border-image: url('../../public/asset/woodenframe.png') 150 round;
+        border-image: url('/asset/woodenframe.png') 150 round;
         border-image-slice: 50;
     }
 
@@ -1109,14 +1115,14 @@ body {
     }
 
     body {
-        background-image: url('../../public/asset/ip12.png') !important;
+        background-image: url('/asset/ip12.png') !important;
         background-size: 100%; 
         background-position: center; 
         background-repeat: no-repeat; 
     }
 
     body.game-background {
-        background-image: url('../../public/asset/sea.png') !important;
+        background-image: url('/asset/sea.png') !important;
         background-size: 400%;
     }
 
@@ -1131,9 +1137,9 @@ body {
         margin-top: 2rem;
         left: 50%;
         top: 50%;
-        background-image: url('../../public/asset/Gip12.png');
+        background-image: url('/asset/Gip12.png');
         border: 13px solid transparent; 
-        border-image: url('../../public/asset/woodenframe.png') 150 round; 
+        border-image: url('/asset/woodenframe.png') 150 round; 
         border-image-slice: 50; 
     }
 
@@ -1295,14 +1301,14 @@ body {
     }
 
     body {
-        background-image: url('../../public/asset/ip12.png') !important;
+        background-image: url('/asset/ip12.png') !important;
         background-size: 100%; 
         background-position: center; 
         background-repeat: no-repeat; 
     }
 
     body.game-background {
-        background-image: url('../../public/asset/sea.png') !important;
+        background-image: url('/asset/sea.png') !important;
         background-size: 700%;
     }
 
@@ -1321,9 +1327,9 @@ body {
         margin-top: 2rem;
         left: 50%;
         top: 50%;
-        background-image: url('../../public/asset/Gip12.png');
+        background-image: url('/asset/Gip12.png');
         border: 13px solid transparent; 
-        border-image: url('../../public/asset/woodenframe.png') 150 round; 
+        border-image: url('/asset/woodenframe.png') 150 round; 
         border-image-slice: 50; 
     }
 

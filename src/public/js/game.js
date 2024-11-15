@@ -1,8 +1,8 @@
 let characters = [
     {
         id: 'budiono',
-        activeImage: '../../public/asset/TBudiono.png',
-        waitingImage: '../../public/asset/WBudiono.png',
+        activeImage: '/asset/TBudiono.png',
+        waitingImage: '/asset/WBudiono.png',
         statement: 'Saya selalu berusaha untuk menghargai dan menghormati perbedaan agama serta kepercayaan yang ada di sekitar saya.',
         correctZone: 'pancasila1'
     }
@@ -13,14 +13,14 @@ let dialogues = [
         characters: [
             {
                 id: 'budiono',
-                activeImage: '../../public/asset/TBudiono.png',
-                waitingImage: '../../public/asset/WBudiono.png',
+                activeImage: '/asset/TBudiono.png',
+                waitingImage: '/asset/WBudiono.png',
                 position: 'right'
             },
             {
                 id: 'fufafu',
-                activeImage: '../../public/asset/TFufafu.png',
-                waitingImage: '../../public/asset/WFufafu.png',
+                activeImage: '/asset/TFufafu.png',
+                waitingImage: '/asset/WFufafu.png',
                 position: 'left'
             }
         ],
@@ -44,14 +44,14 @@ let dialogues = [
         characters: [
             {
                 id: 'siregar',
-                activeImage: '../../public/asset/TSiregar.png',
-                waitingImage: '../../public/asset/WSiregar.png',
+                activeImage: '/asset/TSiregar.png',
+                waitingImage: '/asset/WSiregar.png',
                 position: 'right'
             },
             {
                 id: 'fafafu',
-                activeImage: '../../public/asset/TFafafu.png',
-                waitingImage: '../../public/asset/WFafafu.png',
+                activeImage: '/asset/TFafafu.png',
+                waitingImage: '/asset/WFafafu.png',
                 position: 'left'
             }
         ],
@@ -179,7 +179,7 @@ function handleDragStart(e) {
 
 function setupDragImage(e) {
     const dragImage = new Image();
-    dragImage.src = '../../public/asset/key.png';
+    dragImage.src = '/asset/key.png';
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = canvas.height = 32;
@@ -239,7 +239,7 @@ function handleCorrectDrop(dropZone) {
     isCooldownActive = true;
 
     const chestImg = dropZone.querySelector('img');
-    chestImg.src = '../../public/asset/opened_chest.png';
+    chestImg.src = '/asset/opened_chest.png';
     cashRegister.currentTime = 0;
     cashRegister.play();
 
@@ -247,7 +247,7 @@ function handleCorrectDrop(dropZone) {
     updateScore(100);
 
     setTimeout(() => {
-        chestImg.src = `../../public/asset/c${dropZone.id.slice(-1)}.png`;
+        chestImg.src = `/asset/c${dropZone.id.slice(-1)}.png`;
         setupRandomState();
         isCooldownActive = false;
     }, 1500);
@@ -255,7 +255,7 @@ function handleCorrectDrop(dropZone) {
 
 function createPlusAnimation(chestImg) {
     const plusImg = document.createElement('img');
-    plusImg.src = '../../public/asset/plus.png';
+    plusImg.src = '/asset/plus.png';
     plusImg.className = 'plus-animation';
 
     const chestRect = chestImg.getBoundingClientRect();
@@ -443,7 +443,7 @@ function setupLives() {
     
     for (let i = 0; i < 3; i++) {
         const lifeImg = document.createElement('img');
-        lifeImg.src = '../../public/asset/life.png';
+        lifeImg.src = '/asset/life.png';
         lifeImg.classList.add('life');
         lifeImg.alt = 'Nyawa';
         livesContainer.appendChild(lifeImg);
@@ -453,13 +453,13 @@ function setupLives() {
 function updateLives() {
     const livesImages = document.querySelectorAll('.life');
     livesImages.forEach((img, i) => {
-        img.src = i < lives ? '../../public/asset/life.png' : '../../public/asset/unlife.png';
+        img.src = i < lives ? '/asset/life.png' : '/asset/unlife.png';
     });
 }
 
 function addReplayButton() {
     const replayButton = document.createElement('img');
-    replayButton.src = '../../public/asset/replay.png';
+    replayButton.src = '/asset/replay.png';
     replayButton.id = 'replay-button';
     
     replayButton.addEventListener('mousedown', () => {
@@ -513,20 +513,79 @@ function showGameComplete() {
     `;
 }
 
-function gameOver() {
+// LOGIC GAMEOVER
+let authStatus = null;
+let userHighScore = 0;
+
+async function gameOver() {
+    clickSound.currentTime = 0;
+    clickSound.play();
+
+    // Fetch the user's high score from the server
+    try {
+        const response = await fetch('/user/score'); // Replace with the actual endpoint to get the user's high score
+        authStatus = response.status;
+        const data = await response.json();
+        if (response.ok) {
+            console.log(data.score)
+            userHighScore = data.score;
+        } else {
+            console.error(data.error || 'Failed to fetch high score.');
+        }
+    } catch (error) {
+        console.error('Error fetching high score:', error);
+    }
+
+    // Display the game over screen with the current score and high score
     const gameArea = document.getElementById('game-area');
     gameArea.innerHTML = `
         <div class="game-over-container">
             <div class="game-over-message">
                 <h2>Game Over</h2>
                 <p>Skor Akhir: <span id="final-score">${score}</span></p>
+                <p style="font-size: 0.8em;">Highscore: ${userHighScore}</p>
             </div>
             <div class="save-score-actions">
-                <button onclick="showSaveScoreModal()">Simpan Skor</button>
+                <button onclick="handleSimpanScore(authStatus, score, userHighScore)">Simpan Skor</button>
                 <button onclick="location.reload()">Main Lagi</button>
             </div>
         </div>
     `;
+}
+
+async function handleSimpanScore(authStatus, score, highscore) {
+    if (authStatus == 401) {
+        console.log("harus login dl");
+        showSaveScoreModal();
+    } else {
+        console.log("langsung save");
+        await saveScore(score, highscore);
+    }
+}
+
+// Function to handle saving the score
+async function saveScore(score, userHighScore) {
+    if (score > userHighScore) {
+        try {
+            const response = await fetch('/user/score', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ score: score })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert('Score updated successfully!');
+            } else {
+                alert(data.error || 'Failed to update score.');
+            }
+        } catch (error) {
+            console.error('Error updating score:', error);
+        }
+    } else {
+        alert('Your current score is not higher than your high score.');
+    }
 }
 
 function restartGame() {
@@ -569,12 +628,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showSaveScoreModal() {
-    const modal = document.createElement('div');
-    modal.classList.add('save-score-overlay');
+    clickSound.currentTime = 0;
+    clickSound.play();
+
+    const gameOverContainer = document.querySelector('.game-over-container');
+    gameOverContainer.classList.add('hidden');  // Hide game over screen
+
+    const modal = document.querySelector('.save-score-modal');
+    modal.classList.remove('hidden');  // Show save score modal
 
     modal.innerHTML = `
         <div class="save-score-content">
-            <img src="../../public/asset/xbutton.png" class="close-button" onclick="closeModal()" alt="Close">
+            <img src="/asset/xbutton.png" class="close-button" onclick="closeSaveScoreModal()" alt="Close">
             <div class="save-score-scroll">
                 <h2>Simpan Skor Anda</h2>
                 <p>Anda perlu masuk untuk menyimpan skor Anda.</p>
@@ -616,31 +681,112 @@ function showSaveScoreModal() {
     document.body.appendChild(modal);
 }
 
+function closeSaveScoreModal() {
+    clickSound.currentTime = 0;
+    clickSound.play();
+    
+    const modal = document.querySelector('.save-score-modal');
+    modal.classList.add('hidden');  // Hide save score modal
+
+    const gameOverContainer = document.querySelector('.game-over-container');
+    gameOverContainer.classList.remove('hidden');  // Show game over screen again
+
+}
 
 function closeModal() {
     const modal = document.querySelector('.save-score-modal');
-    modal.remove();
+    modal.classList.add('hidden');  // Hide save score modal
+    document.getElementById('game-area').classList.remove('hidden');  // Ensure game area visibility
     document.getElementById('login-form').classList.add('hidden');
     document.getElementById('signup-form').classList.add('hidden');
+    document.querySelector('.game-over-container').classList.add('hidden'); // Hide game over container
 }
 
 function showLogin() {
+    clickSound.currentTime = 0;
+    clickSound.play();
     document.getElementById('login-form').classList.remove('hidden');
     document.getElementById('signup-form').classList.add('hidden');
 }
 
 function showSignup() {
+    clickSound.currentTime = 0;
+    clickSound.play();
     document.getElementById('signup-form').classList.remove('hidden');
     document.getElementById('login-form').classList.add('hidden');
 }
+async function submitLogin() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
 
-// Dummy functions for now
-function submitLogin() {
-    alert('Login process triggered!');
-    closeModal();
+    // Validate inputs
+    if (!email || !password) {
+        alert('Please fill in both email and password fields.');
+        return;
+    }
+
+    console.log(email, password)
+
+    try {
+        // Send login request to the server
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        // Handle the response
+        const data = await response.json();
+        if (response.ok) {
+            // Login successful
+            alert('Login successful!');
+            // Optionally, redirect to another page or close the modal
+        } else {
+            // Login failed
+            alert(data.error || 'Login failed. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+    }
 }
 
-function submitSignup() {
-    alert('Signup process triggered!');
-    closeModal();
+
+async function submitSignup() {
+    // Get the email and password values from the form
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+
+    // Validate inputs
+    if (!email || !password) {
+        alert('Please fill in both email and password fields.');
+        return;
+    }
+
+    try {
+        // Send signup request to the server
+        const response = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        // Handle the response
+        const data = await response.json();
+        if (response.ok) {
+            // Signup successful
+            alert('Signup successful! You can now log in.');
+            // Close the signup modal
+        } else {
+            // Signup failed
+            alert(data.error || 'Signup failed. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+    }
 }
